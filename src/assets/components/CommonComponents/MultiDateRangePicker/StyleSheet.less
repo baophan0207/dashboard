@@ -1,0 +1,221 @@
+/*
+ *
+ *
+ *  Copyright (c) 2016-2023, AnyGen AI Inc.  All rights reserved.
+ *
+ *
+ *  IMPORTANT - PLEASE READ THIS CAREFULLY BEFORE ATTEMPTING TO USE ANY SOFTWARE,
+ *
+ *  DOCUMENTATION, OR OTHER MATERIALS.
+ *
+ *  This software is the confidential and proprietary information of AnyGen AI Inc
+ *
+ *  ("Confidential Information") and is protected by applicable copyright or other
+ *
+ *  intellectual property laws and treaties. All title and ownership rights in and
+ *
+ *  to the software (including but not limited to any source code, images,
+ *
+ *  photographs, animations, video, audio, music, text embedded in the software),
+ *
+ *  the intellectual property embodied in the software, and any trademarks or
+ *
+ *  service marks of AnyGen AI Inc. that are used in connection with the
+ *
+ *  software, are and shall at all times remain exclusively owned by AnyGen AI,
+ *
+ *  Inc. and its licensors.  Under no
+ *   circumstances shall you disclose such
+ *
+ *  Confidential Information and trade secrets, distribute, disclose or otherwise
+ *
+ *  make available to any third party any portion of the software's source code
+ *
+ *  and shall use it only in accordance with the terms of the license agreement
+ *
+ *  enclosed with this product or as entered into with AnyGen AI, Inc.
+ *
+ *
+ *  You are prohibited from any attempt to disassemble the code, or attempt in
+ *
+ *  any manner to reconstruct, discover, reuse or modify any source code or
+ *
+ *  underlying algorithms of the software.
+ *
+ *
+ *  THIS SOFTWARE IS PROVIDED "AS IS" AND THERE ARE NO WARRANTIES, CLAIMS OR
+ *
+ *  REPRESENTATIONS MADE BY AnyGen AI, INC., OR ITS LICENSORS, SUBSIDIARIES
+ *
+ *  AND AFFILIATES, EITHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING WARRANTIES
+ *
+ *  OF QUALITY, PERFORMANCE, NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR
+ *
+ *  A PARTICULAR PURPOSE, NOR ARE THERE ANY WARRANTIES CREATED BY COURSE OF
+ *
+ *  DEALING, COURSE OF PERFORMANCE, OR TRADE USAGE. AnyGen AI, INC. DOES NOT
+ *
+ *  WARRANT THAT THIS SOFTWARE WILL MEET ANY CLIENT'S NEEDS OR BE FREE FROM
+ *
+ *  ERRORS, OR THAT THE OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED.
+ * /
+ */
+
+.multi-date-range-picker {
+  display: flex;
+  border: 1px solid #dddddd;
+  width: 100%;
+  height: 100%;
+
+  .multi-date-range-picker-division {
+    width: 50%;
+    height: 100%;
+    padding: 0 0 10px;
+
+    &:nth-child(1){
+      border-right: 1px solid #cdcdcd;
+    }
+
+    .multi-date-range-picker-division-header {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      padding: 0 20px;
+      font-weight: bold;
+      font-size: var(--default-title-font-size);
+
+      .multi-date-range-picker-clear-btn{
+        height: 30px;
+        padding: 0 10px;
+        border-radius: 3px;
+        background: var(--fail-color);
+        border: none;
+        color: white;
+        fill: white;
+        box-shadow: 1px 1px 4px rgba(0,0,0,0.24);
+
+
+        &:hover{
+          background: brown;
+          fill: brown;
+        }
+
+
+        &:active{
+          background: var(--fail-color);
+
+        }
+
+        &:disabled{
+          box-shadow: none;
+          background: #f1f1f1;
+          color: #cdcdcd;
+          fill: #cdcdcd;
+          pointer-events: none;
+        }
+      }
+
+      .multi-date-range-picker-mode {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: normal;
+        font-size: var(--default-font-size);
+
+        .multi-date-range-picker-mode {
+
+        }
+      }
+    }
+  }
+
+  .multi-date-range-picker-division-body {
+    height: calc(100% - 50px);
+
+    .multi-date-range-picker-calendar-container {
+      height: 100%;
+      background: #f5f7f9;
+      width: calc(100% - 40px);
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+
+    .multi-date-range-picker-empty-section{
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 30px;
+      line-height: 30px;
+      text-align: center;
+      color: #555555;
+
+    }
+
+    .multi-date-range-picker-selection-division {
+      padding: 10px 20px;
+      max-height: 100%;
+      overflow: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+
+
+
+      &::-webkit-scrollbar {
+        width: 10px;
+        border-radius: 0;
+      }
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #cdcdcd;
+        border-radius: 0;
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background: #afafaf;
+      }
+
+
+      .multi-date-range-picker-item{
+        line-height: 20px;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        max-width: 100%;
+        border-radius: 15px;
+        background: #eaeff5;
+        padding: 2px 2px 2px 10px;
+
+        .multi-date-range-picker-delete-btn{
+          width: 20px;
+          height: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 3px;
+          border-radius: 50%;
+          fill: brown;
+          background: transparent;
+          border: none;
+          /*border: */
+
+          &:hover{
+            fill: darkred;
+            background: rgba(255, 0, 0, 0.1);
+          }
+        }
+      }
+
+    }
+  }
+}

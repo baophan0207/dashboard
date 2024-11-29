@@ -1,0 +1,63 @@
+.additional-data {
+  display: flex;
+  min-width: 80vw;
+  height: 70vh;
+  margin-top: 16px;
+}
+.additional-data .additional-data-container {
+  display: flex;
+  flex: 1;
+  padding: 16px;
+  background-color: var(--first-btn-color-primary);
+  border: 1px solid #CDCDCD;
+  border-radius: 0 3px 3px 0;
+}
+.additional-data .additional-data-container .additional-data-content {
+  flex: 1;
+  background-color: white;
+  padding: 24px;
+  border: 1px solid #CDCDCD;
+  border-radius: 5px;
+  margin: 0 4px;
+}
+.additional-data .additional-data-container .additional-data-content .additional-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+.additional-data .additional-data-container .additional-data-content .additional-body {
+  flex: 1;
+  margin-top: 16px;
+}
+.additional-data .additional-data-container .additional-data-content .additional-body .file-tag-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 8px;
+  border-radius: 4px;
+  background-color: #F0F5F9;
+}
+.additional-data .additional-data-container .additional-data-content .additional-body .file-tag-container .file-tag-name {
+  display: flex;
+  align-items: center;
+}
+.additional-data .additional-data-container .additional-data-content .additional-body .file-tag-container .file-tag-name .file-name {
+  margin-left: 8px;
+  font-weight: 400;
+}
+.additional-data .additional-data-container .additional-data-content .additional-body .file-tag-container .file-tag-name .file-size {
+  margin-left: 8px;
+  background-color: white;
+  border: 1px solid #CDCDCD;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 400;
+  padding: 2px 6px;
+}
+.additional-data .additional-data-container .additional-data-content .additional-body .file-tag-container .file-tag-info {
+  display: flex;
+  align-items: center;
+  fill: var(--lighter-color);
+}
+.additional-data .additional-data-container .additional-data-content .additional-body .file-tag-container .file-tag-info .file-row-count {
+  margin-left: 4px;
+}

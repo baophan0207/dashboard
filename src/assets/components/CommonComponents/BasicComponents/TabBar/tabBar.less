@@ -1,0 +1,39 @@
+.default-tab-bar {
+  width: 100%;
+  border-bottom: 1px solid #cdcdcd;
+  display: flex;
+
+  .default-tab {
+    padding: 0 30px 10px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    gap: 5px;
+    font: var(--default-text);
+    color: var(--font-color);
+
+    &:focus {
+      outline: none;
+    }
+
+
+    &.active {
+      border-bottom: 1px solid var(--primary-color);
+      box-shadow: 0 1px 0 0 var(--primary-color);
+      color: var(--primary-color);
+      font-weight: bold;
+
+    }
+
+    .default-tab-icon{
+      width: 14px;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

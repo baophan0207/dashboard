@@ -1,0 +1,482 @@
+.default-table-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
+.default-table-container .ag-theme-quartz {
+  flex-grow: 1;
+  /* Let the table take the remaining height */
+}
+.default-table-container * {
+  line-height: 24px;
+  font-family: var(--font-family);
+  font-size: var(--default-font-size);
+}
+.ag-cell {
+  display: flex;
+  border-right: 1px solid #dddddd !important;
+  padding: 10px 0 !important;
+}
+.ag-cell .ag-cell-wrapper {
+  align-self: center;
+}
+.ag-header {
+  background: var(--table-header-color) !important;
+}
+.ag-header-cell {
+  border-right: 1px solid #dddddd !important;
+}
+.ag-header-cell-text {
+  font-weight: bold !important;
+  width: 100%;
+  text-align: center;
+  color: var(--primary-color);
+}
+.ag-root-wrapper {
+  border-radius: 3px !important;
+  border: none !important;
+  background: transparent !important;
+}
+.ag-selection-checkbox {
+  height: 24px !important;
+  margin-right: 0 !important;
+  margin-left: 15px !important;
+}
+.table-value-container {
+  width: 100%;
+}
+.table-value-container.multi-label-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 100px;
+  overflow: auto;
+}
+.table-value-container.header-container {
+  width: 100%;
+}
+.table-value-container.header-container .table-header-cell {
+  line-height: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+.table-value-container.header-container .table-header-cell .editable-header-cell {
+  width: 100%;
+  background: white;
+  border: 1px solid var(--light-sky);
+  border-radius: 2px;
+  height: 40px;
+  padding: 0 5px 0 15px;
+  justify-content: space-between;
+}
+.table-value-container.header-container .table-header-cell .table-header-cell--left {
+  width: calc(100% - 45px);
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-left: 10px;
+}
+.table-value-container.header-container .table-header-cell .table-header-cell--left .table-header-cell-name {
+  max-width: 100%;
+  font-weight: bold;
+  color: var(--primary-color);
+  font-size: var(--default-font-size-bold);
+  font-family: var(--font-family);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.table-value-container.header-container .table-header-cell .table-header-cell--left .table-header-cell-sort-icon {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+.table-value-container.header-container .table-header-cell .table-header-cell--left .table-header-cell-sort-icon.hide-icon {
+  display: none;
+}
+.table-value-container.header-container .table-header-cell .table-header-filter-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  stroke: var(--secondary-color);
+  fill: white;
+  position: relative;
+}
+.table-value-container.header-container .table-header-cell .table-header-filter-icon.active {
+  fill: var(--secondary-color);
+}
+.table-value-container.header-container .table-header-cell .table-header-filter-icon.active .table-filter-notification {
+  width: 5px;
+  height: 5px;
+  border-radius: 5px;
+  background: red;
+  position: absolute;
+  bottom: 5px;
+  right: 3px;
+}
+.table-value-container.header-container .table-header-cell .table-header-cell--right {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.table-value-container.header-container .table-header-cell .table-header-cell--right .table-sort-division {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.table-value-container.header-container .table-header-cell .table-header-cell--right .table-sort-division .table-sort-icon {
+  width: 10px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  fill: var(--light-sky);
+  color: var(--light-sky);
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+.table-value-container.header-container .table-header-cell .table-header-cell--right .table-sort-division .table-sort-icon:hover {
+  fill: var(--primary-color);
+  color: var(--primary-color);
+}
+.table-value-container.header-container .table-header-cell .table-header-cell--right .table-sort-division .table-sort-icon:disabled {
+  fill: #cdcdcd;
+  color: #cdcdcd;
+}
+.table-value-container.header-container .table-header-cell .table-header-cell-rename-btn {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  fill: var(--primary-color);
+  background: transparent;
+  padding: 0;
+  border: none;
+}
+.table-value-container.header-container .table-header-cell .table-header-cell-rename-btn:hover {
+  fill: var(--primary-color);
+  border-radius: 50%;
+  background: rgba(2, 36, 84, 0.11);
+}
+.table-value-container.header-container .table-header-cell .table-header-cell-rename-btn:active {
+  background: transparent;
+}
+.table-value-container .table-cell-value-col {
+  max-height: 200px;
+  overflow: auto;
+  line-height: 20px;
+  padding: 5px 15px;
+  user-select: text;
+}
+.table-value-container .table-cell-value-col.center-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-value-container .table-cell-value-col.number-col {
+  justify-content: flex-end;
+  text-align: right;
+}
+.table-value-container .table-cell-value-col.output-col {
+  color: #0a8a64;
+}
+.table-value-container .table-cell-value-col.header-checkbox-col,
+.table-value-container .table-cell-value-col.checkbox-col {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.table-value-container .table-cell-value-col.header-checkbox-col .my-table-checkbox,
+.table-value-container .table-cell-value-col.checkbox-col .my-table-checkbox {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-value-container .table-cell-value-col.output-col-with-tooltip {
+  color: #0a8a64;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.table-value-container .table-cell-value-col.output-col-with-tooltip:hover {
+  text-decoration: underline;
+  color: var(--light-sky);
+}
+.table-value-container .table-cell-value-col-header {
+  font-weight: bold;
+  line-height: 20px;
+  padding: 5px 10px;
+}
+.table-value-container .table-dropdown {
+  max-height: 100%;
+  width: 100%;
+  background: transparent;
+  border: none;
+  font-family: var(--font-family);
+  font-size: var(--default-font-size);
+  align-items: center;
+  justify-content: center;
+}
+.table-value-container .action-cell .action-cell-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-toggle-col {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.patent-family-applicant-list {
+  width: 100%;
+  max-height: 100px;
+  overflow: auto;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.patent-family-applicant-list .patent-family-applicant-tag {
+  padding: 0 10px;
+  border-radius: 10px;
+  background: #e8f3f6;
+  font: var(--default-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.patent-id-list {
+  width: auto;
+  max-height: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.patent-id-list .patent-id-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60px;
+  padding: 2px 10px;
+  border-radius: 20px;
+  border: 0.2px solid var(--secondary-color);
+  background-color: rgba(207, 202, 255, 0.2);
+  line-height: 16px;
+}
+.patent-id-list .patent-id-tag .text {
+  line-height: 16px;
+  margin-right: 4px;
+}
+.patent-id-list .patent-id-tag .icon {
+  fill: var(--secondary-color);
+}
+.patent-id-list .patent-id-tag .icon:hover {
+  cursor: pointer;
+}
+.patent-id-list .patent-id-tag.link-text {
+  color: var(--link-color);
+}
+.patent-id-list .patent-id-tag.link-text:hover {
+  color: var(--blue);
+}
+.patent-id-list .patent-id-tag.link-text:active {
+  color: var(--link-color);
+}
+.comparison-history-info {
+  width: 100%;
+  max-height: 100px;
+  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.comparison-history-info * {
+  font-family: var(--font-family);
+  font-size: var(--default-font-size);
+}
+.comparison-history-info .comparison-history-cell-item {
+  padding: 0 0 0 10px;
+  border-radius: 3px;
+  background: var(--table-header-color);
+  font: var(--default-text);
+  max-width: 100%;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+}
+.comparison-history-info .comparison-history-cell-item .comparison-history-cell-item-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.comparison-history-info .comparison-history-cell-item .comparison-history-cell-item-icon {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  max-width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  fill: var(--primary-color);
+}
+.comparison-history-info.classification-info-container {
+  flex-direction: column;
+  max-height: unset;
+  flex-wrap: nowrap;
+  padding-right: 5px;
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  gap: 10px;
+  margin-top: 10px;
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row.first-row {
+  margin-top: 0;
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row .comparison-history-classification-info-label {
+  width: 80px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row .comparison-history-classification-info-value {
+  width: calc(100% - 200px);
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row .comparison-history-classification-info-value.with-link {
+  color: var(--link-color);
+  text-decoration: underline;
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row .comparison-history-classification-info-value.with-link:hover {
+  color: var(--blue);
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row .comparison-history-classification-info-value.with-link:active {
+  text-decoration: none;
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row .comparison-history-classification-info-value.with-link.disabled {
+  color: #cdcdcd;
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row .comparison-history-classification-info-value-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
+  width: calc(100% - 200px);
+  flex-grow: 1;
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row .comparison-history-classification-info-value-list .comparison-history-classification-info-value-card {
+  height: 24px;
+  border-radius: 20px;
+  background: white;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  border: 1px solid #cdcdcd;
+  padding: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  gap: 5px;
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row .comparison-history-classification-info-value-list .comparison-history-classification-info-value-card .comparison-history-classification-info-value-card-id {
+  line-height: 20px;
+  padding: 0 5px;
+  border-radius: inherit;
+  background: rgba(118, 161, 213, 0.25);
+  color: var(--primary-color);
+}
+.comparison-history-info.classification-info-container .comparison-history-classification-info-row .comparison-history-classification-info-value-list .comparison-history-classification-info-value-card .comparison-history-classification-info-value-card-name {
+  padding-right: 10px;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.my-table-checkbox-cell-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.my-table-checkbox-cell-container .my-table-checkbox {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.my-table-row {
+  background: white !important;
+  --ag-row-hover-color: #fafcfe !important;
+}
+.patent-info-width-condition .patent-info-novelty-id {
+  color: var(--secondary-color);
+}
+.patent-link-container .patent-link-content {
+  text-decoration: none;
+  color: var(--secondary-color);
+}
+.class-list-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.class-list-container .class-list-content {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 2px 10px;
+  border-radius: 20px;
+  border: 0.2px solid var(--secondary-color);
+  background-color: rgba(207, 202, 255, 0.2);
+  margin: 3px;
+}
+.class-list-container .class-list-content .text {
+  line-height: 16px;
+  margin-right: 4px;
+}
+.class-list-container .class-list-content .icon {
+  fill: var(--secondary-color);
+}
+.class-list-container .class-list-content .icon:hover {
+  cursor: pointer;
+}
+.boolean-list-content {
+  display: flex;
+  justify-items: center;
+  width: 100%;
+}

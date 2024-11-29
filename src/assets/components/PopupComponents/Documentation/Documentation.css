@@ -1,0 +1,24 @@
+p {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  margin: 0;
+}
+.heading {
+  font-size: 18px;
+}
+.instruction-container {
+  display: flex;
+  margin-bottom: 30px;
+}
+.instruction-container .title {
+  font-size: 14px;
+}
+.instruction-container .description {
+  font-size: 14px;
+  font-weight: 400;
+  color: #555555;
+}
+.instruction-container .instruction-content {
+  margin-left: 4px;
+}

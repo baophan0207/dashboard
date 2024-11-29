@@ -1,0 +1,55 @@
+.main-body {
+  position: relative;
+  font-family: var(--font-family);
+}
+.main-body .main-loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(50%, 50%);
+  display: flex;
+}
+.main-body .main-loading-container .loading-text {
+  display: flex;
+  align-items: center;
+}
+.main-body .main-loading-container .double-loading-container {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  display: flex;
+}
+.main-body .main-loading-container .double-loading-container .double-loading-spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border-top: 2px solid white;
+  border-left: 2px solid #777777;
+  border-bottom: 2px solid #777777;
+  border-right: 2px solid #777777;
+  animation: spin 0.8s linear infinite;
+  margin-left: 5px;
+}
+.main-body .main-loading-container .double-loading-container .double-inner-loading-spinner {
+  width: 15px;
+  height: 15px;
+  border-left: 2px solid white;
+  border-top: 2px solid #777777;
+  border-bottom: 2px solid #777777;
+  border-right: 2px solid #777777;
+  position: absolute;
+  margin: 0 auto;
+  left: 10px;
+  top: 6px;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/*# sourceMappingURL=visLoading.css.map */

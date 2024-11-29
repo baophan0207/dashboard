@@ -1,0 +1,25 @@
+.tab-list button {
+  min-width: 200px;
+  text-transform: none;
+}
+.tab-list button.Mui-selected {
+  color: black;
+  font-weight: 700;
+}
+.tab-list .tab {
+  height: 100%;
+}
+div .guide-btn {
+  background-color: var(--cta-color);
+  color: #fff;
+  align-items: center ;
+  padding: 7px 15px ;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+div .guide-btn:hover {
+  background-color: var(--cta-color);
+}
+.tab-content {
+  flex: 1;
+}

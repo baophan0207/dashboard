@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        .slaask-widget {
+            width: 97vw !important;
+            height: 93.5vh !important;
+            max-height: 93.5vh !important;
+            top: 6.7vh !important;
+            right: 0vw !important;
+            display: block;
+            z-index: 0 !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            bottom: 0 !important;
+            margin-bottom: 0 !important;
+        }
+        .slaask-widget .slaask-widget-header:hover .slaask-widget-header-button {
+            visibility: hidden !important;
+            opacity: 0 !important;
+            display: none !important;
+        }
+        .slaask-widget .slaask-widget-header:hover .slaask-widget-header-right {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+        .slaask-widget .slaask-widget-header .slaask-widget-header-button {
+            visibility: hidden !important;
+            opacity: 0 !important;
+            display: none !important;
+        }
+        .slaask-widget .slaask-widget-header-button {
+            padding: 0px 14px !important;
+        }
+        .slaask-widget .slaask-widget-header-button:hover svg {
+            background-color: #000000 !important;
+            fill: red !important;
+        }
+        .slaask-widget .slaask-widget-heade {
+            height: 50px !important;
+        }
+        .slaask-widget .slaask-widget-header-right {
+            padding: 0px 14px !important;
+        }
+        .slaask-widget.slaask-widget-header-back-enabled #slaask-widget-header-title {
+            padding: 10px 0 0 80px !important;
+        }
+        .slaask-button {
+            display: none;
+            margin-bottom: 200px !important;
+            box-shadow: none !important;
+            width: 300px !important;
+        }
+        body .slaask-gradient {
+            z-index: -5 !important;
+            display: none !important;
+        }
+        #slaask-widget-header-cross {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            z-index: -9;
+        }
+        #slaask-widget-header-cross:hover {
+            visibility: hidden !important;
+            opacity: 0 !important;
+            display: none !important;
+        }
+        #slaask-widget-header-cross svg {
+            fill: red !important;
+        }
+        .slaask-widget-header-cross {
+            display: none !important;
+            opacity: 0 !important;
+        }
+        .slaask-widget-header-cross:hover {
+            visibility: hidden !important;
+            opacity: 0 !important;
+            display: none !important;
+        }
+        .slaask-widget.slaask-mini .slaask-widget-header-cross {
+            display: none !important;
+        }
+        .slaask-widget-header {
+            max-height: 20px !important;
+        }
+
+        .slaask-widget.slaask-mini .slaask-widget-header-cross {
+            display: none !important;
+        }
+
+
+    </style>
+    <title>AnyGen AI</title>
+</head>
+<body >
+<noscript>You need to enable JavaScript to run this app.</noscript>
+
+<script>
+   
+    window._slaaskSettings = {
+        identify: function() {
+            if (sessionStorage.getItem("IsLogin")) return {
+
+                id: sessionStorage.getItem("LoginUserId"),
+                email: sessionStorage.getItem("LoginUserEmail"),
+                name:  sessionStorage.getItem("LoginUserName"),
+
+            };
+            else return null;
+        },
+        options: {
+            custom_css: {
+                // message: "div { background: pink; color: red;}",
+            },
+        },
+        // key: "spk-06bd3425-796b-454d-881f-7450a58e7828",
+        key: "spk-e04fd1bd-11c7-4d3b-afdc-a7755fee46dc",
+
+    };
+
+</script>
+<script src="https://cdn.slaask.com/chat_loader.js" async="true"></script>
+
+
+
+
+</body>
+</html>

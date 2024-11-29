@@ -1,0 +1,70 @@
+:root{
+    --primary-color: #0F53A5;
+    --secondary-color: #f5f7f9;
+    --font-color: #424242;
+    /*--bg-color: #2e5090; //my blue*/
+    --bg-color: #0F53A5;
+    --heading-color: #F5FAFF;
+    --header-bar: #F5FAFF;
+    --lighter-bg : #e8f1ff;
+    --lighter-primary: #338fff;
+
+    --first-btn-color-primary:#f5f7f9;
+    --first-btn-color-secondary: #f7f7f7;
+
+    --second-btn-color-primary: #214371;
+    --second-btn-color-secondary: #0F53A5;
+
+    --secondary-box-shadow-color1:rgba(0,0,0,0.12);
+    --secondary-box-shadow-color2:rgba(0,0,0,0.24);
+    --secondary-box-shadow-color3:#5a89c6;
+
+    --button-hover-shadow: skyblue;
+
+
+    --primary-text-color: black;
+    --secondary-text-color: white;
+    --tab-active-color: #338FFF;
+    --nav-menu-hover: #233d6e;
+    --nav-menu-active-text: #53ebe5;
+
+    --card-light-color: #F0F8FF;
+
+    --source-card-bg: #f3f5f7;
+
+    --auto-joinable-table-color: #001E42;
+    --auto-joinable-table-list: #f5f7f9;
+
+    --soft-theme-color1: #80B9FF;
+font-family: var(--font-family);
+}
+@font-face {
+    font-family: GTAmerica;
+    src: local('GTAmerica'), url("./3rdparty/fonts/GT-America-Standard-Regular.otf") format("opentype");
+font-family: var(--font-family);
+}
+button{
+    outline: none;
+font-family: var(--font-family);
+}
+div::-webkit-scrollbar{
+    width: 5px;
+    height: 5px;
+font-family: var(--font-family);
+}
+div::-webkit-scrollbar-thumb{
+    background: #cdcdcd;
+    width: 2px;
+    margin: 0 auto;
+    border-radius: 5px;
+font-family: var(--font-family);
+}
+div::-webkit-scrollbar-track{
+    background: transparent;
+font-family: var(--font-family);
+}
+body{
+    margin: 0;
+    padding: 0;
+font-family: var(--font-family);
+}

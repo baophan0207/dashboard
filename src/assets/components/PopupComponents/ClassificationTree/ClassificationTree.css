@@ -1,0 +1,31 @@
+.classification-tree-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+  padding: 16px;
+  background-color: var(--first-btn-color-primary);
+  border: 1px solid #CDCDCD;
+  border-radius: 4px;
+}
+.classification-tree-container .mr8 {
+  margin-right: 8px;
+}
+.classification-tree-container .header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.classification-tree-container .header-container .special-text {
+  color: var(--cta-color);
+  font-weight: 700;
+}
+.classification-tree-container .header-container .drop-down {
+  width: fit-content;
+}
+.classification-tree-container .table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

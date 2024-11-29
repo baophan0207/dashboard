@@ -1,0 +1,8 @@
+.help-container {
+  padding: 32px;
+  width: 800px;
+  max-height: 78vh;
+}
+button.button {
+  padding: 10px 16px;
+}

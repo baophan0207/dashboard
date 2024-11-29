@@ -1,0 +1,43 @@
+.my-icon-toggler-container{
+  border-radius: 3px;
+  background: #FFF;
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 5px 8px;
+  gap: 10px;
+
+  .my-icon-toggler-title{
+    font-size: var(--default-font-size);
+    font-weight: 400;
+  }
+
+  .my-icon-toggler-icons-container{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .my-icon-toggler-body{
+      padding:3px 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+    }
+    .my-icon-toggler-body-active{
+      .my-icon-toggler-body;
+      background: #09092D;
+    }
+  }
+}
+
+
+.my-icon-toggler-container-disabled{
+  .my-icon-toggler-container;
+  background: #CDCDCD;
+  box-shadow: none;
+  pointer-events: none;
+  opacity: 0.8;
+  filter: grayscale(100%);
+}

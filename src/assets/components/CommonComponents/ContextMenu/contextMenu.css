@@ -1,0 +1,167 @@
+.custom-context-menu-btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  fill: #555555;
+  border-radius: 50%;
+  position: relative;
+  font-family: var(--font-family);
+}
+.custom-context-menu-btn:hover {
+  fill: var(--primary-color);
+  cursor: pointer;
+}
+.custom-context-menu-btn:hover .custom-context-menu-list {
+  display: block;
+}
+.custom-context-menu-list {
+  padding: 5px 0px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 10px #cdcdcd;
+  position: absolute;
+  display: none;
+  z-index: 9999;
+  background: white;
+  max-height: 400px;
+  overflow: auto;
+  min-width: 100px;
+  max-width: 250px;
+  font-family: var(--font-family);
+}
+.custom-context-menu-list .custom-context-menu-divider {
+  height: 0;
+  width: calc(100% - 10px);
+  margin-left: auto;
+  margin-right: auto;
+  border-bottom: 1px solid #cdcdcd;
+}
+.custom-context-menu-list .custom-context-menu {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 35px;
+  padding: 0 5px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  position: relative;
+  font-family: var(--font-family);
+}
+.custom-context-menu-list .custom-context-menu:hover {
+  background: #f5f7f9;
+}
+.custom-context-menu-list .custom-context-menu.disabled {
+  pointer-events: none;
+  fill: #cdcdcd;
+  color: #cdcdcd;
+  opacity: 0.8;
+  filter: grayscale(100%);
+}
+.custom-context-menu-list .custom-context-menu.disabled .custom-context-menu-name {
+  color: #cdcdcd;
+}
+.custom-context-menu-list .custom-context-menu:disabled {
+  pointer-events: none;
+  fill: #cdcdcd;
+  color: #cdcdcd;
+  opacity: 0.8;
+  filter: grayscale(100%);
+}
+.custom-context-menu-list .custom-context-menu:disabled .custom-context-menu-name {
+  color: #cdcdcd;
+}
+.custom-context-menu-list .custom-context-menu:active .custom-context-menu-list {
+  display: none !important;
+}
+.custom-context-menu-list .custom-context-menu .custom-context-menu-icon {
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.custom-context-menu-list .custom-context-menu .custom-context-menu-name {
+  width: calc(100% - 30px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+  color: var(--primary-color);
+  text-align: left;
+}
+.custom-context-menu-list-header {
+  width: 100%;
+  height: 30px;
+  background: var(--primary-color);
+  padding: 0 5px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.custom-context-menu-list-header .custom-context-menu-list-header-text {
+  min-width: 10px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.menu-item {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 5px;
+}
+.menu-item .menu-item-icon.disabled {
+  filter: grayscale(100%);
+  opacity: 0.8;
+}
+.menu-item.delete-item {
+  fill: var(--fail-color);
+}
+.menu-item .context-menu-disabled-explaination {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: right;
+  fill: var(--primary-color);
+}
+.menu-item.disabled {
+  fill: #cdcdcd;
+  color: #cdcdcd;
+}
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root.Mui-disabled {
+  opacity: 1 !important;
+}
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root.Mui-disabled {
+  pointer-events: all !important;
+  cursor: default;
+}
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root.Mui-disabled:disabled {
+  background: transparent !important;
+  animation: none !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+.MuiButtonBase-root.Mui-disabled {
+  color: #cdcdcd !important;
+  fill: #cdcdcd;
+  pointer-events: all !important;
+  font-family: var(--font-family);
+}
+.MuiButtonBase-root.Mui-disabled:disabled {
+  background: transparent !important;
+  animation: none !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover {
+  background: transparent !important;
+}
+/*# sourceMappingURL=contextMenu.css.map */

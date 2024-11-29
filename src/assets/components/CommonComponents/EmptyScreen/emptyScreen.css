@@ -1,0 +1,88 @@
+.vertical-empty-layout {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.vertical-empty-layout .vertical-empty-title {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: var(--default-title-font-size);
+  color: var(--primary-color);
+  font-weight: bold;
+}
+.vertical-empty-layout .vertical-empty-illustration-container {
+  width: 300px;
+}
+.vertical-empty-layout .vertical-empty-illustration {
+  width: 100%;
+}
+.vertical-empty-layout .vertical-empty-text {
+  margin-top: 10px;
+  color: #4b4b4b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 20px;
+}
+.vertical-empty-layout .vertical-empty-loading-container {
+  position: relative;
+}
+.vertical-empty-layout .horizontal-empty-page-create-btn {
+  margin-top: 20px;
+}
+.horizontal-empty-layout {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+}
+.horizontal-empty-layout .horizontal-empty-illustration {
+  width: 300px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.horizontal-empty-layout .horizontal-empty-text {
+  width: 300px;
+  margin-left: 20px;
+  text-align: left;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.horizontal-empty-layout .horizontal-empty-text .horizontal-empty-text-header {
+  text-align: left;
+  font-size: var(--default-title-font-size);
+  font-weight: bold;
+  line-height: 30px;
+}
+.horizontal-empty-layout .horizontal-empty-text .horizontal-empty-text-body {
+  text-align: justify;
+  font-size: var(--default-font-size);
+  line-height: 28px;
+  color: #616161;
+}
+.empty-page-create-btn {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+.empty-page-create-btn.vertical {
+  justify-content: center;
+}
+.empty-page-create-btn .empty-page-secondary-button {
+  height: 33px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--primary-color);
+  border-radius: 3px;
+  padding: 0 10px;
+}
+/*# sourceMappingURL=emptyScreen.css.map */

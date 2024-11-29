@@ -1,0 +1,47 @@
+export const DataFileUpload = [
+    {
+        fileName: 'patent_additional_data',
+        fileSize: '55 KB',
+        fileRow: '12,000',
+        date: '12/11/2023',
+        time: '12:30 PM',
+        headers: [
+            { uploadDataHeader: 'Patent_ID', patentFields: 'document_id' },
+            { uploadDataHeader: 'Patent_Title', patentFields: 'title' },
+            { uploadDataHeader: 'Patent_Abstract', patentFields: 'abstract' },
+            { uploadDataHeader: 'Patent_Claim', patentFields: 'claims' },
+            { uploadDataHeader: 'Patent_CPC', patentFields: 'cpc' },
+            { uploadDataHeader: 'Patent_IPC', patentFields: 'ipc' },
+        ],
+    },
+    {
+        fileName: 'patent_additional_data1',
+        fileSize: '555 KB',
+        fileRow: '13,000',
+        date: '12/10/2023',
+        time: '12:30 PM',
+        headers: [
+            { uploadDataHeader: 'Patent_ID', patentFields: 'document_id' },
+            { uploadDataHeader: 'Patent_Title', patentFields: 'title' },
+            { uploadDataHeader: 'Patent_Abstract', patentFields: 'abstract' },
+            { uploadDataHeader: 'Patent_Claim', patentFields: 'claims' },
+            { uploadDataHeader: 'Patent_CPC', patentFields: 'cpc' },
+            { uploadDataHeader: 'Patent_IPC', patentFields: 'ipc' },
+        ],
+    },
+    {
+        fileName: 'patent_additional_data2',
+        fileSize: '5555 KB',
+        fileRow: '13,000',
+        date: '12/09/2023',
+        time: '12:30 PM',
+        headers: [
+            { uploadDataHeader: 'Patent_ID', patentFields: 'document_id' },
+            { uploadDataHeader: 'Patent_Title', patentFields: 'title' },
+            { uploadDataHeader: 'Patent_Abstract', patentFields: 'abstract' },
+            { uploadDataHeader: 'Patent_Claim', patentFields: 'claims' },
+            { uploadDataHeader: 'Patent_CPC', patentFields: 'cpc' },
+            { uploadDataHeader: 'Patent_IPC', patentFields: 'ipc' },
+        ],
+    },
+]

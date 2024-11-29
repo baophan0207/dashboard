@@ -1,0 +1,152 @@
+.session-timeout-popup {
+  width: 550px;
+  background: white;
+  border-radius: 10px;
+}
+.session-timeout-popup .session-timeout-header {
+  width: 100%;
+  height: 60px;
+  background: #3580DA;
+  padding: 0 10px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: white;
+  display: flex;
+  align-items: center;
+  font-size: var(--extra-big-font-size);
+}
+.session-timeout-popup .session-timeout-body-container .session-timeout-body {
+  min-height: 50px;
+  display: flex;
+  padding: 0 20px 0;
+  align-items: center;
+  text-indent: 40px;
+  margin: 10px 0;
+}
+.session-timeout-popup .session-timeout-body-container .session-timeout-button-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 25px;
+  height: 50px;
+}
+.session-timeout-popup .session-timeout-body-container .session-timeout-button-row .session-timeout-ok-btn {
+  width: 100px;
+  height: 33px;
+  border: none;
+  border-radius: 5px;
+  background: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  font-size: var(--default-font-size);
+}
+.session-timeout-popup .session-timeout-body-container .session-timeout-button-row .session-timeout-ok-btn:hover {
+  box-shadow: 0 0 0 2px var(--button-hover-shadow);
+  border: 1px solid var(--lighter-primary);
+}
+.history-threshold-popup {
+  width: 400px;
+  padding: 30px;
+}
+.history-threshold-popup .history-threshold-division {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.history-threshold-popup .history-threshold-division .history-threshold-title {
+  font-weight: bold;
+}
+.history-threshold-popup .history-threshold-division .history-threshold-description {
+  margin-top: 5px;
+  color: #555555;
+  text-align: justify;
+}
+.history-threshold-popup .history-threshold-division .history-threshold-input {
+  width: 100%;
+  height: 40px;
+  background: #e9edf1;
+  padding: 0 20px;
+  border: none;
+  margin-top: 5px;
+  border-radius: 4px;
+}
+.history-threshold-popup .history-threshold-division .history-limitation-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.history-threshold-popup .history-threshold-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 70px;
+  height: 30px;
+  margin-top: 30px;
+}
+.history-threshold-popup .history-threshold-bottom-row button {
+  margin: 0;
+  min-width: 70px;
+  width: 70px;
+}
+.beacon-container {
+  position: absolute;
+  top: 50%;
+  left: 95%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cta-color);
+  z-index: 1;
+  font-family: var(--font-family);
+}
+.beacon-container .beacon-spot {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: inherit;
+  background: inherit;
+  z-index: 1;
+}
+.beacon-container .beacon-spot:before,
+.beacon-container .beacon-spot:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  opacity: 0;
+  background: inherit;
+  margin: auto;
+  top: 0;
+  left: 0;
+}
+.default-select-all-division {
+  display: flex;
+  align-items: center;
+}
+.default-select-all-division .select-all-checkbox {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.default-select-all-division .default-select-all-selector {
+  border: none;
+  background: transparent;
+  height: 30px;
+  width: auto;
+  padding: 3px 0 0;
+  display: flex;
+  align-items: center;
+}
+.default-select-all-division .default-select-all-selector .my-drop-down-selected-item {
+  width: 100% !important;
+}
+.default-select-all-division .default-select-all-selector .my-dropdown-display-value {
+  padding-left: 0 !important;
+  font-size: var(--default-font-size) !important;
+}
+/*# sourceMappingURL=CommonComponent.css.map */

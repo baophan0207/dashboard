@@ -1,0 +1,90 @@
+* {
+  box-sizing: border-box;
+}
+.toggle-button-container .toggle-button-container-background {
+  background: #fff;
+  width: fit-content;
+  border: 1px solid #cdcdcd;
+  border-radius: 34px;
+  box-shadow: #ccdbe8 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+.toggle-button-container .toggle-button-container-background .toggle-button-buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.toggle-button-container .toggle-button-container-background .toggle-button-buttons .toggle-button-option-button {
+  appearance: none;
+  background: none;
+  outline: none;
+  height: 24px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 34px;
+  max-height: 24px;
+  border: 1px solid transparent;
+}
+.toggle-button-container .toggle-button-container-background .toggle-button-buttons .toggle-button-option-button.toggle-button-active-option-btn {
+  color: #fff;
+  background: #4c8dcd;
+  border: 1px solid #fff;
+}
+.toggle-button-container .toggle-button-container-background .toggle-button-buttons .toggle-button-option-button.toggle-button-active-option-btn .toggle-button-button-icon > :first-child {
+  fill: #fff;
+}
+.toggle-button-container .toggle-button-container-background .toggle-button-buttons .toggle-button-option-button:disabled {
+  pointer-events: none;
+  filter: grayscale(100%);
+}
+.toggle-button-container .toggle-button-container-background .toggle-button-buttons .toggle-button-option-button .toggle-button-button-label-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.toggle-button-container .toggle-button-container-background .toggle-button-buttons .toggle-button-option-button .toggle-button-button-label-container .toggle-button-button-icon {
+  margin-right: 3px;
+  display: inline-flex;
+  width: 15px;
+  height: 15px;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+.toggle-button-container .toggle-button-container-background .toggle-button-buttons .toggle-button-option-button .toggle-button-button-label-container .toggle-button-button-icon > :first-child {
+  width: 100%;
+  height: 100%;
+}
+.toggle-button-container .toggle-button-container-background .toggle-button-buttons .toggle-button-option-button .toggle-button-button-label-container .toggle-button-button-label {
+  user-select: none;
+  text-transform: capitalize;
+  font-size: var(--default-font-size);
+  display: inline-block;
+}
+.simple-toggle-btn {
+  width: 40px;
+  height: 20px;
+  padding: 1px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 10px;
+}
+.simple-toggle-btn .simple-toggle-btn-eye {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background: white;
+  transition: all linear 0.15s;
+}
+.simple-toggle-btn .simple-toggle-btn-eye:hover {
+  background: #f5f7f9;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+}
+/*# sourceMappingURL=toggleButton.css.map */

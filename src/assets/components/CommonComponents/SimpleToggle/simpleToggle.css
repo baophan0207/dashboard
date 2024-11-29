@@ -1,0 +1,43 @@
+.simple-toggle-container {
+  width: calc(17px * 2);
+  height: 17px;
+  border-radius: 15px;
+  border: 1px solid #dfdaff;
+  box-shadow: inset 0px 0.2px 0.6px 0px rgba(0, 0, 0, 0.12), inset 0px 1px 1px 0px rgba(0, 0, 0, 0.16);
+  background: rgba(124, 111, 238, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all linear 0.1s;
+  padding: 0 1px;
+}
+.simple-toggle-container:disabled {
+  pointer-events: none;
+  background: #dddddd;
+  border-color: #cdcdcd;
+  opacity: 0.7;
+  box-shadow: none;
+}
+.simple-toggle-container:hover {
+  border-color: #cec8f5;
+}
+.simple-toggle-container.active {
+  background-color: #7c6fee;
+}
+.simple-toggle-container.active .simple-toggle-eye {
+  margin-left: calc(17px - 1.5px);
+}
+.simple-toggle-container .simple-toggle-eye {
+  width: calc(17px - 3px);
+  height: calc(17px - 3.6px);
+  border-radius: calc(17px / 2);
+  box-shadow: 0px 0.2px 0.6px 0px rgba(0, 0, 0, 0.12), 0px 1px 1px 0px rgba(0, 0, 0, 0.16);
+  background: white;
+  margin-left: 0;
+  transition: all linear 0.2s;
+}
+.simple-toggle-container .simple-toggle-eye:hover {
+  transform: scale(1.1);
+  transform-origin: center;
+}
+/*# sourceMappingURL=simpleToggle.css.map */

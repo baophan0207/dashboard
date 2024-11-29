@@ -1,0 +1,116 @@
+@overlay-bg-color: rgba(0, 0, 0, 0.4);
+@button-color: white;
+@hover-scale: 1.2;
+@transition-speed: 0.3s;
+
+.video-player-container{
+  width: 100%;
+  position: relative;
+  //width: 887px;
+  margin: 16px 0;
+  min-width: 600px;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0;
+
+  .video-player{
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border: none;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: @overlay-bg-color;  // Semi-transparent background
+    opacity: 0;  // Initially hidden
+    transition: opacity @transition-speed ease;
+    cursor: pointer;
+
+    // Show overlay when hovering over the video container
+    &:hover {
+      opacity: 1;
+    }
+
+    //button {
+    //  font-size: 40px;
+    //  color: @button-color;
+    //  background: none;
+    //  border: none;
+    //  outline: none;
+    //  cursor: pointer;
+    //  transition: transform 0.2s ease;
+    //
+    //  &:hover {
+    //    transform: scale(@hover-scale); // Enlarge button on hover
+    //  }
+    //}
+  }
+
+  .custom-slider{
+    padding: 0;
+
+    .MuiSlider-thumb {
+      width: 12px;
+      height: 12px;
+      background-color: gray;
+      box-shadow: none;
+      opacity: 0;
+    }
+
+    &:hover .MuiSlider-thumb,
+    .MuiSlider-thumb.Mui-active {
+      opacity: 1;
+    }
+
+    .MuiSlider-track {
+      height: 4px;
+      background-color: gray;
+      border: none;
+    }
+
+    .MuiSlider-rail {
+      height: 4px;
+      opacity: 0.3;
+      background-color: #bdbdbd;
+    }
+  }
+
+  .control-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    background-color: black;
+
+    .control-content{
+      display: flex;
+      align-items: center;
+    }
+
+    button.icon-button{
+      background-color: var(--first-btn-color-primary);
+      margin-right: 8px;
+      margin-left: 8px;
+    }
+
+    .video-time {
+      color: var(--first-btn-color-primary);
+      margin-right: 8px;
+      margin-left: 8px;
+    }
+  }
+}
+
+
+

@@ -1,0 +1,615 @@
+.visualization_popup {
+  height: 100vh;
+  padding: 10px;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  height: 80vh;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar {
+  height: 6vh;
+  border-bottom: 1px solid #cdcdcd;
+  display: flex;
+  width: 98%;
+  margin: 0 auto;
+  justify-content: space-between;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side {
+  position: relative;
+  height: 35px;
+  margin: auto 0;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side:hover .visualization_plot_list_container {
+  display: block;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_dropdown {
+  width: 250px;
+  height: 35px;
+  display: flex;
+  border-radius: 3px;
+  margin: auto 0;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_dropdown .visualization_plot_dropdown_button {
+  width: 30px;
+  height: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  outline: none;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_dropdown .visualization-plot-name {
+  width: 100%;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_list_container {
+  position: absolute;
+  display: none;
+  width: 500px;
+  max-height: 450px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid #e8e8e8;
+  background: #fcfcfc;
+  z-index: 2;
+  padding-bottom: 10px;
+  border-radius: 5px;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_type_title {
+  padding-left: 10px;
+  color: var(--primary-color);
+  background: transparent;
+  height: 30px;
+  display: flex;
+  align-items: center;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting {
+  width: 96%;
+  height: 180px;
+  display: flex;
+  overflow: auto;
+  margin: 0 auto;
+  flex-wrap: wrap;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot {
+  width: 21%;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #cdcdcd;
+  border-radius: 3px;
+  margin: 5px 1.5%;
+  box-shadow: -1px 0 5px #cdcdcd;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot:hover {
+  background: #edf2f7;
+  color: #0f53a5;
+  box-shadow: -1px 0 5px #cdcdcd;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot.active-plot {
+  background: #E8F0FE;
+  border: 1px solid #1967D2;
+  color: #1967D2;
+  box-shadow: none;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot .visualization_each_plot_name {
+  text-align: center;
+  font-size: var(--default-font-size);
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot .area-plot-container {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot .bar-plot-container {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_right_side {
+  display: flex;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_right_side .visualization_choose_axis_container {
+  width: 220px;
+  height: 35px;
+  margin: auto 0;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_custom_query_setting_bar .visualization_setting_right_side .visualization_choose_axis_container .visualization_dropdown_container {
+  width: 150px;
+  height: 37px;
+  border-radius: 3px;
+  margin-left: 8px;
+font-family: var(--font-family);
+}
+.visualization_popup .visualization_custom_query .visualization_plot {
+  height: 70vh;
+  width: 100%;
+  margin: 0 auto;
+  display: inline;
+  overflow: auto;
+font-family: var(--font-family);
+}
+.viz-full-plot-container {
+  box-shadow: 0 4px 8px 0 #000000;
+  width: 90%;
+  margin: 10px auto 0;
+  position: relative;
+  border-radius: 5px;
+font-family: var(--font-family);
+}
+.viz-full-plot-container .viz-full-plot {
+  background: white;
+  border-radius: 5px;
+  padding: 5px;
+font-family: var(--font-family);
+}
+.viz-full-plot-container .viz-loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+font-family: var(--font-family);
+}
+.visualization_model_detail_popup .visualization_plot {
+  height: 70vh;
+  width: 100%;
+  margin: 0 auto;
+  display: inline;
+  overflow: auto;
+font-family: var(--font-family);
+}
+.visualization_model_detail_popup .viz-loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+font-family: var(--font-family);
+}
+.visualization_feature_popup {
+  position: relative;
+font-family: var(--font-family);
+}
+.visualization_feature_popup .visualization_plot {
+  height: 70vh;
+  width: 100%;
+  margin: 0 auto;
+  display: inline;
+  overflow: auto;
+font-family: var(--font-family);
+}
+.visualization_feature_popup .viz-loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+font-family: var(--font-family);
+}
+.show_large_date {
+  height: 70%;
+font-family: var(--font-family);
+}
+.show_large_date .show_large_graph {
+  width: 100%;
+  height: 100%;
+font-family: var(--font-family);
+}
+.model_performance_metric {
+  height: auto;
+  border: 1px solid #cdcdcd;
+  display: flex;
+font-family: var(--font-family);
+}
+.model_performance_metric .ui_visualization_metric_left_side {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  height: 98vh;
+  overflow: auto;
+  padding: 10vh 0 0 0;
+  position: relative;
+font-family: var(--font-family);
+}
+.model_performance_metric .visualization_metric_right_side {
+  width: 45%;
+  max-height: 98vh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+font-family: var(--font-family);
+}
+.model_performance_metric .visualization_metric_right_side .plot_card {
+  border: 1px solid #cdcdcd;
+  border-radius: 3px;
+  margin: 3px;
+  padding: 10px 0;
+  box-shadow: 3px 2px 4px rgba(196, 196, 196, 0.5);
+  display: block;
+font-family: var(--font-family);
+}
+.model_performance_metric .visualization_metric_right_side .plot_card_active {
+  border: 2px solid #789dcb;
+  border-radius: 3px;
+  margin: 3px;
+  padding: 10px 0;
+  box-shadow: 3px 2px 4px rgba(196, 196, 196, 0.5);
+  display: block;
+font-family: var(--font-family);
+}
+.model_performance_metric {
+  height: auto;
+  border: 1px solid #cdcdcd;
+  display: flex;
+font-family: var(--font-family);
+}
+.model_performance_metric .visualization_metric_left_side {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  padding: 10vh 0 0 0;
+  position: relative;
+  height: 98vh;
+  overflow: auto;
+font-family: var(--font-family);
+}
+.model_performance_metric .visualization_metric_left_side .visualization_metric_left_side_loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+font-family: var(--font-family);
+}
+.model_performance_metric .visualization_metric_right_side {
+  width: 45%;
+  max-height: 98vh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+font-family: var(--font-family);
+}
+.model_performance_metric .visualization_metric_right_side .plot_card {
+  border: 1px solid #cdcdcd;
+  border-radius: 3px;
+  margin: 3px;
+  padding: 10px 0;
+  box-shadow: 3px 2px 4px rgba(196, 196, 196, 0.5);
+font-family: var(--font-family);
+}
+.model_performance_metric .visualization_metric_right_side .plot_card_active {
+  border: 2px solid #789dcb;
+  border-radius: 3px;
+  margin: 3px;
+  padding: 10px 0;
+  box-shadow: 3px 2px 4px rgba(196, 196, 196, 0.5);
+font-family: var(--font-family);
+}
+.show_data_graph {
+  display: flex;
+  flex-direction: column;
+  height: 650px;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar {
+  height: 6vh;
+  border-bottom: 1px solid #cdcdcd;
+  display: flex;
+  width: 98%;
+  margin: 0 auto;
+  justify-content: space-between;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side {
+  position: relative;
+  height: 35px;
+  margin: auto 0;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side:hover .visualization_plot_list_container {
+  display: block;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_dropdown {
+  width: 250px;
+  height: 35px;
+  display: flex;
+  border-radius: 3px;
+  margin: auto 0;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_dropdown .visualization_plot_dropdown_button {
+  width: 30px;
+  height: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  outline: none;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_dropdown .visualization-plot-name {
+  width: 100%;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_list_container {
+  position: absolute;
+  display: none;
+  width: 500px;
+  max-height: 450px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid #e8e8e8;
+  background: #fcfcfc;
+  z-index: 2;
+  padding-bottom: 10px;
+  border-radius: 5px;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_type_title {
+  padding-left: 10px;
+  color: var(--primary-color);
+  background: transparent;
+  height: 30px;
+  display: flex;
+  align-items: center;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting {
+  width: 96%;
+  height: 180px;
+  display: flex;
+  overflow: auto;
+  margin: 0 auto;
+  flex-wrap: wrap;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot {
+  width: 21%;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #cdcdcd;
+  border-radius: 3px;
+  margin: 5px 1.5%;
+  box-shadow: -1px 0 5px #cdcdcd;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot:hover {
+  background: #edf2f7;
+  color: #0f53a5;
+  box-shadow: -1px 0 5px #cdcdcd;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot.active-plot {
+  background: #E8F0FE;
+  border: 1px solid #1967D2;
+  color: #1967D2;
+  box-shadow: none;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot .visualization_each_plot_name {
+  text-align: center;
+  font-size: var(--default-font-size);
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot .area-plot-container {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_left_side .visualization_plot_list_container .visualization_plot_setting .visualization_each_plot .bar-plot-container {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_right_side {
+  display: flex;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_right_side .visualization_choose_axis_container {
+  width: 220px;
+  height: 35px;
+  margin: auto 0;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+font-family: var(--font-family);
+}
+.show_data_graph .visualization_setting_bar .visualization_setting_right_side .visualization_choose_axis_container .visualization_dropdown_container {
+  width: 150px;
+  height: 37px;
+  border-radius: 3px;
+  margin-left: 8px;
+font-family: var(--font-family);
+}
+.show_data_graph .show_visualization_large_small {
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+font-family: var(--font-family);
+}
+.show_data_graph .show_visualization_large_small .show_large_data {
+  height: 70%;
+font-family: var(--font-family);
+}
+.show_data_graph .show_visualization_large_small .show_large_data .show_large_graph {
+  width: 100%;
+  height: 100%;
+font-family: var(--font-family);
+}
+.show_data_graph .show_visualization_large_small .show_small_data {
+  height: 30%;
+  float: right;
+font-family: var(--font-family);
+}
+.show_data_graph .show_visualization_large_small .show_small_data .show_small_graph {
+  display: inline-block;
+  float: right;
+  width: 30%;
+  height: 100%;
+font-family: var(--font-family);
+}
+.model_performance {
+  display: flex;
+  flex-direction: column;
+  height: 650px;
+font-family: var(--font-family);
+}
+.model_performance .performance_graph_legend {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+font-family: var(--font-family);
+}
+.model_performance .performance_graph_legend .graph_each_legend {
+  width: 20%;
+font-family: var(--font-family);
+}
+.model_performance .performance_graph_legend .graph_each_legend .bad_prediction_legend {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: rgba(255, 128, 128, 0.8);
+font-family: var(--font-family);
+}
+.model_performance .performance_graph_legend .graph_each_legend .legend_label {
+  margin-left: 5px;
+  font-family: GTAmerica,Serif,Arial;
+font-family: var(--font-family);
+}
+.model_performance .performance_graph_legend .graph_each_legend .need_to_check_legend {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: rgba(255, 232, 166, 0.8);
+font-family: var(--font-family);
+}
+.model_performance .performance_graph_legend .graph_each_legend .acceptable_accuracy_legend {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: rgba(128, 185, 255, 0.8);
+font-family: var(--font-family);
+}
+.model_performance .performance_graph_legend .graph_each_legend .good_accuracy_legend {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: rgba(128, 185, 255, 0.8);
+font-family: var(--font-family);
+}
+.model_performance .model_performance_graph {
+  width: 90%;
+font-family: var(--font-family);
+}
+.metric-iframe-container {
+  width: 1000px;
+  height: 72vh;
+  position: relative;
+  left: 10%;
+font-family: var(--font-family);
+}
+.metric-iframe-container .model_performance_metric {
+  height: 100%;
+  border: 1px solid #cdcdcd;
+  display: flex;
+  width: 100%;
+font-family: var(--font-family);
+}
+.metric-iframe-container .model_performance_metric .model-performance-multi-output-list {
+  border-left: 1px solid #cdcdcd;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+font-family: var(--font-family);
+}
+.metric-iframe-container .model_performance_metric .model-performance-multi-output-list .model-performance-output-title {
+  height: 35px;
+  padding: 8px;
+font-family: var(--font-family);
+}
+.metric-iframe-container .model_performance_metric .model-performance-multi-output-list .model-performance-output-list {
+  height: 90%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+font-family: var(--font-family);
+}
+.metric-iframe-container .model_performance_metric .model-performance-multi-output-list .model-performance-output-list .model-performance-output {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 250px;
+  margin: 0 auto 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+font-family: var(--font-family);
+}
+.metric-iframe-container .model_performance_metric .model-performance-multi-output-list .model-performance-output-list .model-performance-output.active-output {
+  background: var(--primary-color);
+  color: white;
+  outline: none;
+font-family: var(--font-family);
+}
+.metric-iframe-container .model_performance_metric .ui_main_metric_container {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  padding: 10vh 0 0 0;
+  position: relative;
+  background: pink;
+font-family: var(--font-family);
+}
+.metric-iframe-container .model_performance_metric .ui_main_metric_container .metric_main_loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+font-family: var(--font-family);
+}
+.metric-iframe-container .model_performance_metric .ui_metric_plots_container {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  background: #f5f7f9;
+font-family: var(--font-family);
+}
+/*# sourceMappingURL=subVisualization.css.map */

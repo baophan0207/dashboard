@@ -1,0 +1,141 @@
+.main-cta-btn{
+  color: white;
+  fill:  white;
+  height: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+  border: none;
+  position: relative;
+  border-radius: 3px;
+  background: var(--cta-color);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  cursor:pointer;
+
+  &.in-progress-state{
+    box-shadow: none;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  .main-cta-dropdown-icon{
+    fill: var(--primary-color);
+  }
+
+  &:hover{
+    background: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(124, 111, 238, 0.2);
+
+
+    .main-cta-drop-down-list{
+      display: block;
+    }
+  }
+  &:active{
+    background: var(--cta-color);
+  }
+
+  &:disabled{
+    fill: #555555;
+    background: #fafafa;
+    border: 1px solid #cdcdcd;
+    color: #cdcdcd;
+    opacity: 100%;
+    filter: grayscale(100%);
+    opacity: 0.5;
+    box-shadow: none;
+
+    &:hover{
+      box-shadow: none;
+      transition: none;
+    }
+
+    .main-cta-btn-icon{
+      fill: #cdcdcd;
+    }
+
+    .main-cta-dropdown-icon{
+      fill: #cdcdcd;
+    }
+
+
+    &:active{
+      background: #d2d2d2;
+      color:#cdcdcd;
+      fill: #cdcdcd;
+      filter: grayscale(100%);
+    }
+
+  }
+  .main-cta-btn-icon{
+    fill: white;
+    width: 30px;
+  }
+
+
+
+  .main-cta-drop-down-list{
+    position: absolute;
+    right: 0;
+    top: 30px;
+    background: var(--secondary-color);
+    border: none;
+    border-radius: 3px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24), 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 9999;
+    display: none;
+    min-width: 100%;
+
+
+
+    .main-cta-drop-down-item{
+      white-space: nowrap;
+      display: flex;
+      padding: 10px 30px 10px 20px;
+      justify-items: center;
+      min-width: 100%;
+      z-index: 9999;
+      background: transparent;
+      color: white;
+      cursor:pointer;
+
+
+      &:hover{
+        //background: #274b6f;
+        background: var(--button-hover-background);
+      }
+
+      .main-cta-drop-down-icon{
+        fill: white;
+      }
+    }
+  }
+}
+
+.main-cta-inprogress-btn{
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding-left: 5px;
+  padding-right: 5px;
+  gap: 5px;
+
+  .main-cta-inprogress-loading{
+    min-width: 14px;
+    min-height: 14px;
+    max-width: 16px;
+    max-height: 16px;
+    border-radius: 50%;
+    border: 1.2px solid rgba(9, 56, 51, 0.09);
+    border-left-color: #c7faee;
+    animation: spin 1s linear infinite;
+
+  }
+}

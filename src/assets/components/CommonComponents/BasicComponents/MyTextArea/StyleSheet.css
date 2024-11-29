@@ -1,0 +1,17 @@
+.testing-content-editable-empty[contenteditable=true]:empty:before {
+  content: attr(placeholder);
+  color: #CDCDCD;
+  border-bottom: 1px solid #407BFF;
+  font-weight: 400;
+  font-size: 14px;
+  width: fit-content;
+}
+.testing-content-editable-empty {
+  display: inline-block;
+}
+.coded-color {
+  color: var(--light-sky);
+  font-size: var(--default-font-size);
+  font-weight: 400;
+}
+/*# sourceMappingURL=StyleSheet.css.map */
