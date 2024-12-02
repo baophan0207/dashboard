@@ -1,9 +1,8 @@
 import React from 'react'
 import './StyleSheet.css'
 import Icon from '../../../../IconLibrary/Icon'
-import DuoIcon from '../../../../IconLibrary/DuoIcon'
 import hexToRgba from 'hex-to-rgba'
-import { hasDataList, isValidData } from '../CommonMethods'
+import { isValidData } from '../CommonMethods'
 
 export const FamilyApplicantList = (list) => {
     return (

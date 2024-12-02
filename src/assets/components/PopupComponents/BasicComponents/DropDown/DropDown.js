@@ -1,34 +1,31 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import './DropDown.css'
 import PropTypes from 'prop-types'
 import Icon from '../../../../icons/Icon'
 
-class DropDown extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            value: '',
-            list: [],
-            icon: this.props.icon,
-            iconColor: this.props.iconColor,
-            showDropDownList: false,
-            disabled: this.props.disabled,
-            multiLabel: this.props.multiLabel,
-            listTitle: this.props.listTitle,
-            dropDownListStyle: this.props.dropDownListStyle,
-            placeholder: this.props.placeholder,
-            className: this.props.className,
-            dropDownStyle: this.props.dropDownStyle,
-        }
-    }
+const DropDown = (props) => {
+    const [state, setState] = useState({
+        value: '',
+        list: [],
+        icon: props.icon,
+        iconColor: props.iconColor,
+        showDropDownList: false,
+        disabled: props.disabled,
+        multiLabel: props.multiLabel,
+        listTitle: props.listTitle,
+        dropDownListStyle: props.dropDownListStyle,
+        placeholder: props.placeholder,
+        className: props.className,
+        dropDownStyle: props.dropDownStyle,
+    })
 
-    componentDidMount() {
+    useEffect(() => {
         if (
-            this.props.list !== undefined &&
-            this.props.list !== null &&
-            this.props.list !== ''
+            props.list !== undefined &&
+            props.list !== null &&
+            props.list !== ''
         ) {
-            let {
+            const {
                 list,
                 value,
                 icon,
@@ -40,8 +37,9 @@ class DropDown extends React.Component {
                 placeholder,
                 className,
                 dropDownStyle,
-            } = this.props
-            this.setState({
+            } = props
+            setState((prev) => ({
+                ...prev,
                 list,
                 value,
                 icon,
@@ -53,221 +51,178 @@ class DropDown extends React.Component {
                 placeholder,
                 className,
                 dropDownStyle,
-            })
+            }))
         }
+    }, [props])
+
+    const handleDropDownList = () => {
+        setState((prev) => ({
+            ...prev,
+            showDropDownList: !prev.showDropDownList,
+        }))
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (
-            nextProps.list !== undefined &&
-            nextProps.list !== null &&
-            nextProps.list !== ''
-        ) {
-            let {
-                list,
-                value,
-                icon,
-                iconColor,
-                disabled,
-                multiLabel,
-                listTitle,
-                dropDownListStyle,
-                placeholder,
-                className,
-                dropDownStyle,
-            } = nextProps
-            this.setState({
-                list,
-                value,
-                icon,
-                iconColor,
-                disabled,
-                multiLabel,
-                listTitle,
-                dropDownListStyle,
-                placeholder,
-                className,
-                dropDownStyle,
-            })
-        }
-    }
-
-    handleDropDownList() {
-        this.setState({
-            showDropDownList: !this.state.showDropDownList,
-        })
-    }
-
-    handleClickDropDownValue(chosenValue) {
-        let { onChange } = this.props
-        onChange(chosenValue)
-        this.setState({
+    const handleClickDropDownValue = (chosenValue) => {
+        props.onChange(chosenValue)
+        setState((prev) => ({
+            ...prev,
             value: chosenValue,
             showDropDownList: false,
-        })
+        }))
     }
 
-    handleClickMultiDropDown(chosenList) {
-        let { onChange } = this.props
-        onChange(chosenList)
-        this.setState({
+    const handleClickMultiDropDown = (chosenList) => {
+        props.onChange(chosenList)
+        setState((prev) => ({
+            ...prev,
             value: chosenList,
             showDropDownList: false,
-        })
+        }))
     }
 
-    handleOpenPopup = (eventName) => {
-        this.setState({
+    const handleOpenPopup = (eventName) => {
+        setState((prev) => ({
+            ...prev,
             [eventName]: true,
-        })
+        }))
     }
 
-    handleClosePopup = (eventName) => {
-        this.setState({
+    const handleClosePopup = (eventName) => {
+        setState((prev) => ({
+            ...prev,
             [eventName]: false,
-        })
+        }))
     }
 
-    render() {
-        let {
-            value,
-            disabled,
-            list,
-            iconColor,
-            icon,
-            listTitle,
-            dropDownListStyle,
-            placeholder,
-            className,
-            dropDownStyle,
-        } = this.state
-        return (
-            <div
-                className="default-dropdown-box-container"
-                onClick={this.handleDropDownList.bind(this)}
-                onMouseLeave={() => {
-                    this.handleClosePopup('showDropDownList')
-                }}
+    return (
+        <div
+            className="default-dropdown-box-container"
+            onClick={handleDropDownList}
+            onMouseLeave={() => {
+                handleClosePopup('showDropDownList')
+            }}
+        >
+            <button
+                style={state.dropDownStyle}
+                className={`default-dropdown-content-container ${state.className}`}
+                disabled={state.disabled}
             >
-                <button
-                    style={dropDownStyle}
-                    className={`default-dropdown-content-container ${className}`}
-                    disabled={disabled}
-                >
-                    {icon !== 'empty' ? (
-                        <div className="default-dropdown-icon-container">
-                            <Icon
-                                icon={icon}
-                                size={16}
-                                style={{ fill: iconColor }}
-                                className="default-dropdown-content-icon"
-                            />
-                        </div>
-                    ) : null}
-                    {value !== undefined && value !== null && value !== '' ? (
-                        <input
-                            readOnly={true}
-                            type="text"
-                            value={value.label}
-                            className="default-dropdown-value-label"
-                        />
-                    ) : (
-                        <input
-                            readOnly={true}
-                            type="text"
-                            value={placeholder}
-                            className="default-dropdown-value-label"
-                        />
-                    )}
-
-                    <button className="default-dropdown-button">
+                {state.icon !== 'empty' ? (
+                    <div className="default-dropdown-icon-container">
                         <Icon
-                            icon="down_arrow"
-                            size={20}
-                            className="show-dropdown-list"
+                            icon={state.icon}
+                            size={16}
+                            style={{ fill: state.iconColor }}
+                            className="default-dropdown-content-icon"
                         />
-                    </button>
+                    </div>
+                ) : null}
+                {state.value !== undefined &&
+                state.value !== null &&
+                state.value !== '' ? (
+                    <input
+                        readOnly={true}
+                        type="text"
+                        value={state.value.label}
+                        className="default-dropdown-value-label"
+                    />
+                ) : (
+                    <input
+                        readOnly={true}
+                        type="text"
+                        value={state.placeholder}
+                        className="default-dropdown-value-label"
+                    />
+                )}
+
+                <button className="default-dropdown-button">
+                    <Icon
+                        icon="down_arrow"
+                        size={20}
+                        className="show-dropdown-list"
+                    />
                 </button>
-                {list !== undefined && list !== null && list !== '' ? (
-                    this.state.showDropDownList && !this.state.disabled ? (
-                        list.length > 0 ? (
-                            this.state.multiLabel ? (
-                                <div className="default-dropdown-multi-label-list">
-                                    {list.map((dropdownList) => (
-                                        <Fragment key={dropdownList.value}>
-                                            <div className="drop-down-multi-label">
-                                                {dropdownList.label}
+            </button>
+            {state.list !== undefined &&
+            state.list !== null &&
+            state.list !== '' ? (
+                state.showDropDownList && !state.disabled ? (
+                    state.list.length > 0 ? (
+                        state.multiLabel ? (
+                            <div className="default-dropdown-multi-label-list">
+                                {state.list.map((dropdownList) => (
+                                    <Fragment key={dropdownList.value}>
+                                        <div className="drop-down-multi-label">
+                                            {dropdownList.label}
+                                        </div>
+                                        {dropdownList.options.length !== 0 ? (
+                                            <div className="default-dropdown-title-list">
+                                                {dropdownList.options.map(
+                                                    (dropdownValue) => (
+                                                        <button
+                                                            className="default-dropdown-value"
+                                                            onClick={handleClickMultiDropDown.bind(
+                                                                null,
+                                                                dropdownValue
+                                                            )}
+                                                            disabled={
+                                                                dropdownValue.disabled
+                                                            }
+                                                        >
+                                                            {
+                                                                dropdownValue.value
+                                                            }
+                                                        </button>
+                                                    )
+                                                )}
                                             </div>
-                                            {dropdownList.options.length !==
-                                            0 ? (
-                                                <div className="default-dropdown-title-list">
-                                                    {dropdownList.options.map(
-                                                        (dropdownValue) => (
-                                                            <button
-                                                                className="default-dropdown-value"
-                                                                onClick={this.handleClickMultiDropDown.bind(
-                                                                    this,
-                                                                    dropdownValue
-                                                                )}
-                                                                disabled={
-                                                                    dropdownValue.disabled
-                                                                }
-                                                            >
-                                                                {
-                                                                    dropdownValue.value
-                                                                }
-                                                            </button>
-                                                        )
-                                                    )}
-                                                </div>
-                                            ) : null}
-                                        </Fragment>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div
-                                    className="default-dropdown-list"
-                                    style={dropDownListStyle}
-                                >
-                                    {listTitle !== '' &&
-                                    listTitle !== undefined ? (
-                                        <label className="default-dropdown-list-title">
-                                            {listTitle}
-                                        </label>
-                                    ) : null}
-                                    {list.map((dropDownValue) => (
-                                        <button
-                                            key={dropDownValue.value}
-                                            className={
-                                                listTitle === undefined &&
-                                                false &&
-                                                listTitle === ''
-                                                    ? 'default-dropdown-content'
-                                                    : 'default-dropdown-content show-title'
-                                            }
-                                            onClick={this.handleClickDropDownValue.bind(
-                                                this,
-                                                dropDownValue
-                                            )}
-                                            disabled={dropDownValue.disabled}
-                                        >
-                                            {dropDownValue.label}
-                                        </button>
-                                    ))}
-                                </div>
-                            )
+                                        ) : null}
+                                    </Fragment>
+                                ))}
+                            </div>
                         ) : (
-                            <div className="default-dropdown-list">
-                                <button className="empty-dropdown-content">
-                                    There is no option
-                                </button>
+                            <div
+                                className="default-dropdown-list"
+                                style={state.dropDownListStyle}
+                            >
+                                {state.listTitle !== '' &&
+                                state.listTitle !== undefined ? (
+                                    <label className="default-dropdown-list-title">
+                                        {state.listTitle}
+                                    </label>
+                                ) : null}
+                                {state.list.map((dropDownValue) => (
+                                    <button
+                                        key={dropDownValue.value}
+                                        className={
+                                            state.listTitle === undefined &&
+                                            false &&
+                                            state.listTitle === ''
+                                                ? 'default-dropdown-content'
+                                                : 'default-dropdown-content show-title'
+                                        }
+                                        onClick={handleClickDropDownValue.bind(
+                                            null,
+                                            dropDownValue
+                                        )}
+                                        disabled={dropDownValue.disabled}
+                                    >
+                                        {dropDownValue.label}
+                                    </button>
+                                ))}
                             </div>
                         )
-                    ) : null
-                ) : null}
-            </div>
-        )
-    }
+                    ) : (
+                        <div className="default-dropdown-list">
+                            <button className="empty-dropdown-content">
+                                There is no option
+                            </button>
+                        </div>
+                    )
+                ) : null
+            ) : null}
+        </div>
+    )
 }
 
 DropDown.defaultProps = {

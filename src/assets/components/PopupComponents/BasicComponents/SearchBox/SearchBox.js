@@ -58,127 +58,100 @@
  ERRORS, OR THAT THE OPERATION OF THE SOFTWARE WILL BE UNINTERRUPTED.
 */
 
-import React from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import './SearchBox.css'
 import Icon from '../../../../IconLibrary/Icon'
 
-class SearchBox extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            searchOn: false,
-            AlwaysExpand: false,
-            searchValue: this.props.value,
-        }
-        this.searchBtnRef = React.createRef()
-        this.searchValueRef = React.createRef()
-    }
+const SearchBox = (props) => {
+    const [searchOn, setSearchOn] = useState(false)
+    const [alwaysExpand, setAlwaysExpand] = useState(false)
+    const [searchValue, setSearchValue] = useState(props.value)
 
-    componentDidMount() {
-        this.getDataFromCaller(this.props)
-    }
+    const searchBtnRef = useRef()
+    const searchValueRef = useRef()
 
-    componentWillReceiveProps(nextProps, nextContext) {
-        this.getDataFromCaller(nextProps)
-    }
-
-    getDataFromCaller(data) {
+    const getDataFromCaller = (data) => {
         if (data.AlwaysExpand !== undefined && data.AlwaysExpand !== null) {
-            let { AlwaysExpand } = data
-            if (AlwaysExpand) {
-                this.setState({
-                    onSearch: true,
-                })
+            if (data.AlwaysExpand) {
+                setSearchOn(true)
             }
-            this.setState({
-                AlwaysExpand: AlwaysExpand,
-            })
+            setAlwaysExpand(data.AlwaysExpand)
         }
     }
 
-    handleClickOnSearch() {
-        let searchOn = !this.state.searchOn
-        this.setState({
-            searchOn,
-        })
+    useEffect(() => {
+        getDataFromCaller(props)
+    }, [props])
+
+    const handleClickOnSearch = () => {
+        setSearchOn(!searchOn)
     }
 
-    handleSearchInputBox(event) {
-        this.setState({
-            searchValue: event.target.value,
-        })
+    const handleSearchInputBox = (event) => {
+        setSearchValue(event.target.value)
     }
 
-    keyPress = (e) => {
+    const keyPress = (e) => {
         if (e.keyCode === 13) {
             e.preventDefault()
-            this.searchBtnRef.current.focus()
-            if (
-                this.props.onKeyDown !== undefined &&
-                this.props.onKeyDown !== null
-            ) {
-                this.props.onKeyDown()
-            } else if (
-                this.props.handleSearchOnClick !== undefined &&
-                this.props.handleSearchOnClick !== null
-            ) {
-                this.props.handleSearchOnClick()
+            searchBtnRef.current.focus()
+            if (props.onKeyDown) {
+                props.onKeyDown()
+            } else if (props.handleSearchOnClick) {
+                props.handleSearchOnClick()
             }
         } else if (e.keyCode === 38) {
             e.preventDefault()
-            this.searchValueRef.current.focus()
+            searchValueRef.current.focus()
         }
     }
 
-    render() {
-        let {
-            placeholder,
-            onSearch,
-            fontSize,
-            width,
-            disabled,
-            value,
-            handleSearchOnClick,
-            onKeyDown,
-        } = this.props
-        return (
-            <div className="search-box-container">
-                <div
-                    className="search-box-input-container"
-                    style={{ width: width }}
-                >
-                    {(onKeyDown !== undefined && onKeyDown !== null) ||
-                    (handleSearchOnClick !== undefined &&
-                        handleSearchOnClick !== null) ? (
-                        <input
-                            type="text"
-                            ref={this.searchValueRef}
-                            onKeyDown={(event) => this.keyPress(event)}
-                            style={{ fontSize: fontSize + 'px' }}
-                            className="search-box-input"
-                            value={value}
-                            onChange={onSearch}
-                            placeholder={placeholder}
-                        />
-                    ) : (
-                        <input
-                            type="text"
-                            ref={this.searchValueRef}
-                            style={{ fontSize: fontSize + 'px' }}
-                            className="search-box-input"
-                            value={value}
-                            onChange={onSearch}
-                            placeholder={placeholder}
-                        />
-                    )}
-                    <button className="search-box-icon">
-                        <Icon icon="search" size={16} />
-                    </button>
-                </div>
+    const {
+        placeholder,
+        onSearch,
+        fontSize,
+        width,
+        disabled,
+        value,
+        handleSearchOnClick,
+        onKeyDown,
+    } = props
+
+    return (
+        <div className="search-box-container">
+            <div
+                className="search-box-input-container"
+                style={{ width: width }}
+            >
+                {onKeyDown || handleSearchOnClick ? (
+                    <input
+                        type="text"
+                        ref={searchValueRef}
+                        onKeyDown={keyPress}
+                        style={{ fontSize: `${fontSize}px` }}
+                        className="search-box-input"
+                        value={value}
+                        onChange={onSearch}
+                        placeholder={placeholder}
+                    />
+                ) : (
+                    <input
+                        type="text"
+                        ref={searchValueRef}
+                        style={{ fontSize: `${fontSize}px` }}
+                        className="search-box-input"
+                        value={value}
+                        onChange={onSearch}
+                        placeholder={placeholder}
+                    />
+                )}
+                <button ref={searchBtnRef} className="search-box-icon">
+                    <Icon icon="search" size={16} />
+                </button>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 SearchBox.defaultProps = {
@@ -196,4 +169,5 @@ SearchBox.propTypes = {
     fontSize: PropTypes.number,
     disabled: PropTypes.bool,
 }
+
 export default SearchBox

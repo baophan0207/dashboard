@@ -62,145 +62,119 @@
  */
 
 import './DropDown.css'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import MenuItem from '@material-ui/core/MenuItem/MenuItem'
 import Select from '@material-ui/core/Select/Select'
 import MyCheckbox from '../../../CommonComponents/BasicComponents/Checkbox/MyCheckbox'
 import Pagination from '../../../CommonComponents/BasicComponents/PaginationV1/Pagination'
 
-export default class MyCheckDrop extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            selectedItem: '',
-            selectAllItems: false,
-            selectedCount: 0,
-            values: [],
-        }
-    }
+const MyCheckDrop = (props) => {
+    const [state, setState] = useState({
+        selectedItem: '',
+        selectAllItems: false,
+        selectedCount: 0,
+        values: [],
+    })
 
-    componentDidMount() {
-        const { selectedItem, selectAllItems, selectedCount, values } =
-            this.props
-        this.setState({
+    useEffect(() => {
+        const { selectedItem, selectAllItems, selectedCount, values } = props
+        setState({
             selectedItem,
             selectAllItems,
             selectedCount,
             values,
         })
+    }, [props])
+
+    const handleChange = (event) => {
+        setState((prev) => ({ ...prev, selectedItem: event.target.value }))
+        props.onChange(event.target.value)
     }
 
-    componentWillReceiveProps(nextProps, nextContext) {
-        const { selectedItem, selectAllItems, selectedCount, values } =
-            nextProps
-        this.setState({
-            selectedItem,
-            selectAllItems,
-            selectedCount,
-            values,
-        })
-    }
-
-    handleChange = (event) => {
-        console.log('my check drop on change: ', event.target.value)
-        this.setState({ selectedItem: event.target.value })
-        this.props.onChange(event.target.value)
-    }
-
-    handleDeleteItem = (event, keyword) => {
+    const handleDeleteItem = (event, keyword) => {
         event.stopPropagation()
         event.preventDefault()
-        this.props.onDelete()
+        props.onDelete()
     }
 
-    render() {
-        let {
-            error,
-            className,
-            height,
-            menuMaxHeight,
-            title,
-            onChangeSelectItem,
-            onChangeSelectAll,
-        } = this.props
-        const { values, selectAllItems, selectedCount } = this.state
-        const { selectedItem } = this.state
-        return (
-            <div className={'my-drop-down-default-style ' + className}>
-                <Select
-                    size={'small'}
-                    multiple
-                    displayEmpty
-                    value={values}
-                    onChange={(e) => this.handleChange(e)}
-                    renderValue={(value) => {
-                        return (
-                            <div className="patent-info-selection-label">
-                                {title}
-                            </div>
-                        )
+    const {
+        error,
+        className,
+        height,
+        menuMaxHeight,
+        title,
+        onChangeSelectItem,
+        onChangeSelectAll,
+    } = props
+    const { values, selectAllItems, selectedCount, selectedItem } = state
+
+    return (
+        <div className={'my-drop-down-default-style ' + className}>
+            <Select
+                size={'small'}
+                multiple
+                displayEmpty
+                value={values}
+                onChange={(e) => handleChange(e)}
+                renderValue={(value) => (
+                    <div className="patent-info-selection-label">{title}</div>
+                )}
+                className={error ? 'my-dropdown-box error' : 'my-dropdown-box'}
+            >
+                <div className="check-drop-down-title">{title}</div>
+                <div className="check-drop-down-info-row">
+                    <div className="selected-item-count">Selected:</div>
+                    <div className="selected-item-value">{selectedCount}</div>
+                </div>
+
+                <MenuItem value={'All'}>
+                    <div className="check-drop-down-item select-all">
+                        <MyCheckbox
+                            onChange={onChangeSelectAll}
+                            checked={selectAllItems}
+                        />
+                        <div className="check-drop-down-item-label">
+                            {'Select All'}
+                        </div>
+                    </div>
+                </MenuItem>
+                <div
+                    className="check-drop-menu-list"
+                    style={{
+                        height: values.length > 20 ? '300px' : 'auto',
                     }}
-                    className={
-                        error ? 'my-dropdown-box error' : 'my-dropdown-box'
-                    }
                 >
-                    <div className="check-drop-down-title">{title}</div>
-                    <div className="check-drop-down-info-row">
-                        <div className="selected-item-count">Selected:</div>
-                        <div className="selected-item-value">
-                            {selectedCount}
-                        </div>
-                    </div>
-
-                    <MenuItem value={'All'}>
-                        <div className="check-drop-down-item select-all">
-                            <MyCheckbox
-                                onChange={onChangeSelectAll}
-                                checked={selectAllItems}
-                            />
-                            <div className="check-drop-down-item-label">
-                                {'Select All'}
-                            </div>
-                        </div>
-                    </MenuItem>
-                    <div
-                        className="check-drop-menu-list"
-                        style={{
-                            height: values.length > 20 ? '300px' : 'auto',
-                        }}
-                    >
-                        {values.map((eachItem, index) => (
-                            <MenuItem value={eachItem.Name}>
-                                <div className="check-drop-down-item">
-                                    <MyCheckbox
-                                        checked={eachItem.isSelected}
-                                        onChange={() =>
-                                            onChangeSelectItem(index, eachItem)
-                                        }
-                                    />
-                                    <div className="check-drop-down-item-label">
-                                        {eachItem.Name}
-                                    </div>
+                    {values.map((eachItem, index) => (
+                        <MenuItem value={eachItem.Name}>
+                            <div className="check-drop-down-item">
+                                <MyCheckbox
+                                    checked={eachItem.isSelected}
+                                    onChange={() =>
+                                        onChangeSelectItem(index, eachItem)
+                                    }
+                                />
+                                <div className="check-drop-down-item-label">
+                                    {eachItem.Name}
                                 </div>
-                            </MenuItem>
-                        ))}
-                    </div>
+                            </div>
+                        </MenuItem>
+                    ))}
+                </div>
 
-                    {values.length > 20 && (
-                        <div className="check-drop-pagination-row">
-                            <Pagination
-                                paginationType={'only pager'}
-                                noOfPages={99}
-                                onChangePage={() => {}}
-                                currentPage={1}
-                            />
-                        </div>
-                    )}
-                </Select>
-            </div>
-        )
-    }
+                {values.length > 20 && (
+                    <div className="check-drop-pagination-row">
+                        <Pagination
+                            paginationType={'only pager'}
+                            noOfPages={99}
+                            onChangePage={() => {}}
+                            currentPage={1}
+                        />
+                    </div>
+                )}
+            </Select>
+        </div>
+    )
 }
 
 MyCheckDrop.defaultProps = {
@@ -216,6 +190,7 @@ MyCheckDrop.defaultProps = {
         {
             Name: 'this is long item testing to see how much this can be stretched and whether controller is working or not',
         },
+        { Name: 'Item 2' },
         { Name: 'Item 2' },
         { Name: 'Item 2' },
         { Name: 'Item 2' },
@@ -274,3 +249,5 @@ MyCheckDrop.propTypes = {
     itemDesign: PropTypes.any,
     deletable: PropTypes.bool,
 }
+
+export default MyCheckDrop

@@ -1,63 +1,59 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
+
+// Common Components
+import Pagination from '../../CommonComponents/BasicComponents/PaginationV1/Pagination'
+
+// My Components
 import TabPopup from '../BasicComponents/Tab/TabPopup'
 import Nodes from '../Nodes/Nodes'
-import './ClassificationTree.css'
 import NodesActions from '../Nodes/NodesActions/NodesActions'
-
-import { Headers } from '../Nodes/TableProps'
-import { Data } from '../Nodes/DefaultProps'
-import Pagination from '../../CommonComponents/BasicComponents/PaginationV1/Pagination'
 import DataUploadSidebar from '../DataUploadSidebar/DataUploadSidebar'
 import { DataFileUpload } from '../DataUploadSidebar/Data'
 
-class ClassificationTree extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            data: Data,
-            filteredData: Data,
-            typingTimeOut: 0,
-            totalPage: 0,
-            perPage: 5,
-            currentPage: 1,
-            dataPerPage: [],
-            dropDownList: [],
-            sortBy: {},
-            sortOrder: 'asc',
-            sortType: 'asc',
-            dataFileUpload: [],
-            selectedDataFileUpload: {},
-        }
-    }
+// Local imports
+import { Headers } from '../Nodes/TableProps'
+import { Data } from '../Nodes/DefaultProps'
+import './ClassificationTree.css'
 
-    componentDidMount() {
-        let dropDownList = []
-        for (let i = 0; i < Headers.length; i++) {
-            const { DisplayName, Key, ...item } = {
-                ...Headers[i],
-            }
-            dropDownList.push({ Name: DisplayName, MenuName: Key })
-        }
-        this.setState({
-            totalPage: Math.ceil(Data.length / this.state.perPage),
-            dataPerPage: Data.slice(0, this.state.perPage),
-            dropDownList,
-            sortBy: dropDownList[0],
-            dataFileUpload: DataFileUpload,
-            selectedDataFileUpload: DataFileUpload[0],
-        })
-    }
+const ClassificationTree = () => {
+    const [data] = useState(Data)
+    const [filteredData, setFilteredData] = useState(Data)
+    const [typingTimeOut, setTypingTimeOut] = useState(0)
+    const [totalPage, setTotalPage] = useState(0)
+    const [perPage] = useState(5)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [dataPerPage, setDataPerPage] = useState([])
+    const [dropDownList, setDropDownList] = useState([])
+    const [sortBy, setSortBy] = useState({})
+    const [sortOrder, setSortOrder] = useState('asc')
+    const [sortType, setSortType] = useState('asc')
+    const [dataFileUpload, setDataFileUpload] = useState([])
+    const [selectedDataFileUpload, setSelectedDataFileUpload] = useState({})
 
-    handleSearch = (event) => {
+    useEffect(() => {
+        const newDropDownList = Headers.map(({ DisplayName, Key }) => ({
+            Name: DisplayName,
+            MenuName: Key,
+        }))
+
+        setDropDownList(newDropDownList)
+        setSortBy(newDropDownList[0])
+        setDataFileUpload(DataFileUpload)
+        setSelectedDataFileUpload(DataFileUpload[0])
+        setTotalPage(Math.ceil(Data.length / perPage))
+        setDataPerPage(Data.slice(0, perPage))
+    }, [perPage])
+
+    const handleSearch = (event) => {
         const searchTerm = event.target.value.toLowerCase()
 
-        if (this.state.typingTimeOut) {
-            clearTimeout(this.state.typingTimeOut)
+        if (typingTimeOut) {
+            clearTimeout(typingTimeOut)
         }
 
-        this.setState({
-            typingTimeOut: setTimeout(() => {
-                const filteredData = this.state.data.filter((item) => {
+        setTypingTimeOut(
+            setTimeout(() => {
+                const filtered = data.filter((item) => {
                     const idMatch = item.id.toLowerCase().includes(searchTerm)
                     const nameMatch = item.name
                         .toLowerCase()
@@ -65,138 +61,120 @@ class ClassificationTree extends Component {
                     const descriptionMatch = item.description
                         .toLowerCase()
                         .includes(searchTerm)
-
                     return idMatch || nameMatch || descriptionMatch
                 })
 
-                this.setState({ filteredData })
-                this.handlePageChange(1)
-                // console.log(filteredData)
-            }, 500),
-        })
+                setFilteredData(filtered)
+                setDataPerPage(filtered.slice(0, perPage))
+                setCurrentPage(1)
+                setTotalPage(Math.ceil(filtered.length / perPage))
+            }, 500)
+        )
     }
 
-    onSortOrder = () => {
-        const filteredData = this.state.filteredData.reverse()
-        this.setState({
-            sortOrder: this.state.sortOrder === 'asc' ? 'desc' : 'asc',
-            filteredData,
-        })
-        this.handlePageChange(1)
+    const onSortOrder = () => {
+        const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc'
+        setSortOrder(newSortOrder)
+        const newFilteredData = [...filteredData].reverse()
+        setFilteredData(newFilteredData)
+        setDataPerPage(newFilteredData.slice(0, perPage))
+        setCurrentPage(1)
     }
 
-    onSortBy = (sortBy) => {
-        const nextSortBy = this.state.dropDownList.find(
-            (i) => i.MenuName === sortBy
+    const onSortBy = (nextSortByMenu) => {
+        const nextSortBy = dropDownList.find(
+            (i) => i.MenuName === nextSortByMenu
         )
 
-        if (typeof this.state.filteredData[0][nextSortBy.MenuName] == 'boolean')
-            return
+        if (typeof filteredData[0][nextSortBy.MenuName] === 'boolean') return
 
-        const nextValues = this.state.filteredData.sort((a, b) => {
-            return a[nextSortBy.MenuName].localeCompare(b[nextSortBy.MenuName])
-        })
-        this.setState({
-            sortBy: nextSortBy,
-            filteredData:
-                this.state.sortOrder === 'asc'
-                    ? nextValues
-                    : nextValues.reverse(),
-        })
-        this.handlePageChange(1)
+        const nextValues = [...filteredData].sort((firstItem, secondItem) =>
+            firstItem[nextSortBy.MenuName].localeCompare(
+                secondItem[nextSortBy.MenuName]
+            )
+        )
+
+        setSortBy(nextSortBy)
+        setFilteredData(nextValues)
+        setDataPerPage(nextValues.slice(0, perPage))
+        setCurrentPage(1)
     }
 
-    handlePageChange = (pageNumber) => {
-        this.setState({
-            currentPage: pageNumber,
-            dataPerPage: this.state.filteredData.slice(
-                pageNumber * this.state.perPage - this.state.perPage,
-                pageNumber * this.state.perPage
-            ),
-            totalPage: Math.ceil(
-                this.state.filteredData.length / this.state.perPage
-            ),
-        })
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber)
+        setDataPerPage(
+            filteredData.slice(
+                pageNumber * perPage - perPage,
+                pageNumber * perPage
+            )
+        )
+        setTotalPage(Math.ceil(filteredData.length / perPage))
     }
 
-    handleRadioChange = (event) => {
-        this.setState({
-            selectedDataFileUpload: this.state.dataFileUpload.find(
-                (item) => item.date === event.target.value
-            ),
-        })
+    const handleRadioChange = (event) => {
+        setSelectedDataFileUpload(
+            dataFileUpload.find((item) => item.date === event.target.value)
+        )
     }
 
-    handleSortChange = (event) => {
-        this.setState({
-            sortType: this.state.sortType === 'asc' ? 'desc' : 'asc',
-            dataFileUpload: this.state.dataFileUpload.reverse(),
-        })
+    const handleSortChange = () => {
+        setSortType(sortType === 'asc' ? 'desc' : 'asc')
+        setDataFileUpload([...dataFileUpload].reverse())
     }
 
-    render() {
-        const tabs = [
-            {
-                Name: 'Nodes',
-                Element: <Nodes filteredData={this.state.dataPerPage} />,
-            },
-            {
-                Name: 'Tree',
-                Element: <></>,
-            },
-        ]
+    const tabs = [
+        {
+            Name: 'Nodes',
+            Element: <Nodes filteredData={dataPerPage} />,
+        },
+        {
+            Name: 'Tree',
+            Element: <></>,
+        },
+    ]
 
-        const {
-            totalPage,
-            currentPage,
-            perPage,
-            sortType,
-            dataFileUpload,
-            selectedDataFileUpload,
-        } = this.state
-        return (
-            <div style={{ display: 'flex', width: '100%', marginTop: '16px' }}>
-                {dataFileUpload.length > 1 && (
-                    <DataUploadSidebar
-                        sortType={sortType}
-                        dataFileUpload={dataFileUpload}
-                        selectedDataFileUpload={selectedDataFileUpload}
-                        handleRadioChange={this.handleRadioChange}
-                        handleSortChange={this.handleSortChange}
-                    />
-                )}
-                <div className="classification-tree-container">
-                    <TabPopup
-                        tabs={tabs}
-                        actions={
-                            <NodesActions
-                                onSearch={this.handleSearch}
-                                sortOrder={this.state.sortOrder}
-                                onSortOrder={this.onSortOrder}
-                                dropDownList={this.state.dropDownList}
-                                sortBy={this.state.sortBy}
-                                onSortBy={this.onSortBy}
-                            />
-                        }
-                        tabFontSize={12}
-                    />
-                    <br />
-                    <br />
-                    <div>
-                        {totalPage > 1 && (
-                            <Pagination
-                                paginationType={'both'}
-                                noOfPages={totalPage}
-                                onChangePage={this.handlePageChange}
-                                currentPage={currentPage}
-                                pageItemsLimit={perPage}
-                            />
-                        )}
-                    </div>
+    return (
+        <div style={{ display: 'flex', width: '100%', marginTop: '16px' }}>
+            {dataFileUpload.length > 1 && (
+                <DataUploadSidebar
+                    sortType={sortType}
+                    dataFileUpload={dataFileUpload}
+                    selectedDataFileUpload={selectedDataFileUpload}
+                    handleRadioChange={handleRadioChange}
+                    handleSortChange={handleSortChange}
+                />
+            )}
+            <div className="classification-tree-container">
+                <TabPopup
+                    tabs={tabs}
+                    actions={
+                        <NodesActions
+                            onSearch={handleSearch}
+                            sortOrder={sortOrder}
+                            onSortOrder={onSortOrder}
+                            dropDownList={dropDownList}
+                            sortBy={sortBy}
+                            onSortBy={onSortBy}
+                        />
+                    }
+                    tabFontSize={12}
+                />
+                <br />
+                <br />
+                <div>
+                    {totalPage > 1 && (
+                        <Pagination
+                            paginationType={'both'}
+                            noOfPages={totalPage}
+                            onChangePage={handlePageChange}
+                            currentPage={currentPage}
+                            pageItemsLimit={perPage}
+                        />
+                    )}
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default ClassificationTree

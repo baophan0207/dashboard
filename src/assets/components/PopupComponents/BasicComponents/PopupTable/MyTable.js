@@ -37,78 +37,24 @@ const autoSizeStrategy = {
     defaultMinWidth: 100,
 }
 
-export default class MyTable extends React.Component {
-    constructor(props) {
-        super(props)
-        this.tableContainerRef = React.createRef()
-        this.state = {
-            columnDefs: [],
-            rowData: [],
-            defaultColDef: {
-                flex: 1,
-                wrapText: true,
-                autoHeight: true,
-                maxHeight: 40,
-                pinned: 'right',
-                enableRenameColumns: true,
+const MyTable = (props) => {
+    const tableContainerRef = React.useRef()
+    const [state, setState] = React.useState({
+        columnDefs: [],
+        rowData: [],
+        defaultColDef: {
+            flex: 1,
+            wrapText: true,
+            autoHeight: true,
+            maxHeight: 40,
+            pinned: 'right',
+            enableRenameColumns: true,
+        },
+        tableHeight: 0,
+        heightType: '',
+    })
 
-                // cellRenderer: AnyGenTableCell,
-                // cellRendererParams: {
-                //     maxCellHeight: this.props.maxCellHeight,
-                // },
-            },
-        }
-    }
-
-    componentDidMount() {
-        let {
-            Headers,
-            actionList,
-            onAction,
-            onChange,
-            onViewDetails,
-            selectAllInfo = {},
-            pendingLoading = false,
-            pendingHeaders = [],
-        } = this.props
-        this.prepareData(
-            Headers,
-            actionList,
-            onAction,
-            onChange,
-            onViewDetails,
-            selectAllInfo,
-            pendingLoading,
-            pendingHeaders
-        )
-        this.prepareTableHeight()
-    }
-
-    componentWillReceiveProps(nextProps, nextContext) {
-        let {
-            Headers,
-            actionList,
-            onAction,
-            onChange,
-            onViewDetails,
-            selectAllInfo = {},
-            pendingLoading = false,
-            pendingHeaders = [],
-        } = nextProps
-        this.prepareData(
-            Headers,
-            actionList,
-            onAction,
-            onChange,
-            onViewDetails,
-            selectAllInfo,
-            pendingLoading,
-            pendingHeaders
-        )
-        this.prepareTableHeight()
-    }
-
-    prepareData = (
+    const prepareData = (
         Headers,
         actionList = [],
         onAction,
@@ -169,14 +115,14 @@ export default class MyTable extends React.Component {
                                           )
                                     : StatusCell,
                 cellRendererParams: {
-                    maxCellHeight: this.props.maxCellHeight,
+                    maxCellHeight: props.maxCellHeight,
                     onAction:
                         Headers[i].Type === 'checkbox' ? onChange : onAction,
                     actionList: actionList,
                     customCell: DesignProps.CustomCellDesign,
                     checkbox: DesignProps.Selectable,
                     parentFunction: isValidData(DesignProps.ParentFunctionName)
-                        ? this.props[DesignProps.ParentFunctionName]
+                        ? props[DesignProps.ParentFunctionName]
                         : () => {},
                 },
                 // headerComponent: Headers[i].Key === "checkbox"?CheckboxCell:AnyGenHeaderCell,
@@ -186,7 +132,7 @@ export default class MyTable extends React.Component {
                 newHeaderInfo.headerComponentParams = selectAllInfo
             } else if (Headers[i].Key === 'no') {
                 let pageNumber = 1
-                let pageSize = this.props.Data.length
+                let pageSize = props.Data.length
                 newHeaderInfo.valueGetter = (params) => {
                     if (isValidData(pageNumber) && isValidData(pageSize)) {
                         return getSerialRowNumber(
@@ -201,71 +147,97 @@ export default class MyTable extends React.Component {
             }
             headerArr.push(newHeaderInfo)
         }
-        this.setState({
+        setState((prev) => ({
+            ...prev,
             columnDefs: headerArr,
-        })
+        }))
     }
 
-    prepareTableHeight = () => {
-        let { cellHeight } = this.props
-
-        let tableContainerHeight = this.tableContainerRef.current.clientHeight
-        let heightType // autoHeight, manualHeight, fixedHeight
+    const prepareTableHeight = () => {
+        let { cellHeight } = props
+        let tableContainerHeight = tableContainerRef.current.clientHeight
+        let heightType
         let tableRowHeight = cellHeight
-        let tableHeaderHeight = 50 //55.78
-        let minHeight = 400 // 150 + 56
-        let dataHeight =
-            this.props.Data.length * tableRowHeight + tableHeaderHeight
+        let tableHeaderHeight = 50
+        let minHeight = 400
+        let dataHeight = props.Data.length * tableRowHeight + tableHeaderHeight
+
         if (dataHeight < minHeight) {
             heightType = 'manualHeight'
-            this.setState({
+            setState((prev) => ({
+                ...prev,
                 tableHeight: dataHeight,
                 heightType,
-            })
+            }))
         } else {
             heightType = 'fixedHeight'
-            this.setState({
+            setState((prev) => ({
+                ...prev,
                 tableHeight:
                     tableContainerHeight > 0 ? tableContainerHeight : 400,
                 heightType,
-            })
+            }))
         }
     }
 
-    render() {
-        let { autoHeight, tableHeight } = this.state
-        let { noShadow } = this.props
-        return (
-            <div
-                className={
-                    noShadow
-                        ? 'default-table-container no-shadow'
-                        : 'default-table-container'
-                }
-                ref={this.tableContainerRef}
-            >
-                <div
-                    className="ag-theme-quartz"
-                    style={{
-                        width: '100%',
-                        height: tableHeight,
-                    }}
-                >
-                    <AgGridReact
-                        suppressRowClickSelection={false} // for row selection
-                        suppressCellFocus={true} // for column color (selection)
-                        domLayout={autoHeight ? 'autoHeight' : 'normal'}
-                        defaultColDef={this.state.defaultColDef}
-                        columnDefs={this.state.columnDefs}
-                        rowClass={'my-table-row'}
-                        autoSizeStrategy={autoSizeStrategy}
-                        rowSelection={'multiple'}
-                        rowData={this.props.Data}
-                    ></AgGridReact>
-                </div>
-            </div>
+    React.useEffect(() => {
+        const {
+            Headers,
+            actionList,
+            onAction,
+            onChange,
+            onViewDetails,
+            selectAllInfo = {},
+            pendingLoading = false,
+            pendingHeaders = [],
+        } = props
+
+        prepareData(
+            Headers,
+            actionList,
+            onAction,
+            onChange,
+            onViewDetails,
+            selectAllInfo,
+            pendingLoading,
+            pendingHeaders
         )
-    }
+        prepareTableHeight()
+    }, [props])
+
+    const { autoHeight } = state
+    const { noShadow } = props
+
+    return (
+        <div
+            className={
+                noShadow
+                    ? 'default-table-container no-shadow'
+                    : 'default-table-container'
+            }
+            ref={tableContainerRef}
+        >
+            <div
+                className="ag-theme-quartz"
+                style={{
+                    width: '100%',
+                    height: state.tableHeight,
+                }}
+            >
+                <AgGridReact
+                    suppressRowClickSelection={false}
+                    suppressCellFocus={true}
+                    domLayout={autoHeight ? 'autoHeight' : 'normal'}
+                    defaultColDef={state.defaultColDef}
+                    columnDefs={state.columnDefs}
+                    rowClass={'my-table-row'}
+                    autoSizeStrategy={autoSizeStrategy}
+                    rowSelection={'multiple'}
+                    rowData={props.Data}
+                />
+            </div>
+        </div>
+    )
 }
 
 const AnyGenTableCell = (params) => {
@@ -481,3 +453,5 @@ MyTable.propTypes = {
     actionList: PropTypes.array,
     onAction: PropTypes.func,
 }
+
+export default MyTable

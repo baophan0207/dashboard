@@ -1,30 +1,24 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
+
+// My Components
 import MyTable from '../BasicComponents/PopupTable/MyTable'
+
+// Local imports
 import { Headers } from './TableProps'
 import './Nodes.css'
 
-class Nodes extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            header: Headers,
-            data: this.props.filteredData,
-        }
-    }
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.filteredData !== this.props.filteredData) {
-            this.setState({
-                data: this.props.filteredData,
-            })
-        }
-    }
+const Nodes = ({ filteredData }) => {
+    const [data, setData] = useState(filteredData)
 
-    render() {
-        return (
-            <div className="nodes-table-container">
-                <MyTable Headers={this.state.header} Data={this.state.data} />
-            </div>
-        )
-    }
+    useEffect(() => {
+        setData(filteredData)
+    }, [filteredData])
+
+    return (
+        <div className="nodes-table-container">
+            <MyTable Headers={Headers} Data={data} />
+        </div>
+    )
 }
+
 export default Nodes
