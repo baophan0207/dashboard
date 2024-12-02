@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './StyleSheet.css'
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
@@ -38,8 +38,8 @@ const autoSizeStrategy = {
 }
 
 const MyTable = (props) => {
-    const tableContainerRef = React.useRef()
-    const [state, setState] = React.useState({
+    const tableContainerRef = useRef()
+    const [state, setState] = useState({
         columnDefs: [],
         rowData: [],
         defaultColDef: {
@@ -180,7 +180,7 @@ const MyTable = (props) => {
         }
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         const {
             Headers,
             actionList,

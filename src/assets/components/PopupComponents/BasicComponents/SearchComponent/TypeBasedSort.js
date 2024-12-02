@@ -61,7 +61,7 @@
  * /
  */
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './StyleSheet.css'
 import Icon from '../../../../IconLibrary/Icon'
 import Select from '@material-ui/core/Select/Select'
@@ -72,39 +72,22 @@ import { Divider } from '@material-ui/core'
 import '../DropDown/DropDown.css'
 import { isValidData } from '../CommonMethods'
 
-export default class TypeBasedSort extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            sortBy: this.props.sortBy,
-            sortByOptions: this.props.sortByOptions,
-            sortOrder: this.props.sortOrder, // asc
-            sortOrderOptions: [
-                { Name: 'Ascending', MenuName: 'asc', Icon: 'asc' },
-                { Name: 'Descending', MenuName: 'desc', Icon: 'desc' },
-            ],
-        }
-    }
+const TypeBasedSort = (props) => {
+    const [sortBy, setSortBy] = useState(props.sortBy)
+    const [sortByOptions, setSortByOptions] = useState(props.sortByOptions)
+    const [sortOrder, setSortOrder] = useState(props.sortOrder)
+    const [sortOrderOptions] = useState([
+        { Name: 'Ascending', MenuName: 'asc', Icon: 'asc' },
+        { Name: 'Descending', MenuName: 'desc', Icon: 'desc' },
+    ])
 
-    componentDidMount() {
-        const { sortByOptions, sortBy, sortOrder } = this.props
-        this.setState({
-            sortBy,
-            sortOrder,
-            sortByOptions,
-        })
-    }
+    useEffect(() => {
+        setSortBy(props.sortBy)
+        setSortOrder(props.sortOrder)
+        setSortByOptions(props.sortByOptions)
+    }, [props.sortBy, props.sortOrder, props.sortByOptions])
 
-    componentWillReceiveProps(nextProps, nextContext) {
-        const { sortByOptions, sortBy, sortOrder } = nextProps
-        this.setState({
-            sortBy,
-            sortOrder,
-            sortByOptions,
-        })
-    }
-
-    handleChange = (event) => {
+    const handleChange = (event) => {
         if (isValidData(event.target.value)) {
             if (
                 event.target.value === 'Ascending' ||
@@ -112,136 +95,131 @@ export default class TypeBasedSort extends React.Component {
             ) {
                 if (
                     (event.target.value === 'Ascending' &&
-                        this.state.sortOrder === 'asc') ||
+                        sortOrder === 'asc') ||
                     (event.target.value === 'Descending' &&
-                        this.state.sortOrder === 'desc')
+                        sortOrder === 'desc')
                 ) {
                     // no need to change
                 } else {
-                    this.props.onSortOrderChange(event.target.value)
+                    props.onSortOrderChange(event.target.value)
                 }
             } else {
-                let sortByOptions = this.state.sortByOptions
                 let eventValue = event.target.value
-                let sortBy = eventValue
+                let newSortBy = eventValue
                 for (let index = 0; index < sortByOptions.length; index++) {
                     if (sortByOptions[index].Name === eventValue) {
                         if (sortByOptions[index].MenuName) {
-                            sortBy = sortByOptions[index].MenuName
+                            newSortBy = sortByOptions[index].MenuName
                         }
                         break
                     }
                 }
-                this.props.onChange(sortBy)
+                props.onChange(newSortBy)
             }
         }
     }
 
-    getDisplayName = (name) => {
+    const getDisplayName = (name) => {
         let displayName = name
-        for (let index = 0; index < this.state.sortByOptions.length; index++) {
-            if (this.state.sortByOptions[index].MenuName === name) {
-                displayName = displayName = this.state.sortByOptions[index].Name
+        for (let index = 0; index < sortByOptions.length; index++) {
+            if (sortByOptions[index].MenuName === name) {
+                displayName = sortByOptions[index].Name
             }
         }
         return displayName
     }
 
-    render() {
-        let { disabled, placeHolder, width } = this.props
-        const { sortBy, sortOrder, sortByOptions, sortOrderOptions } =
-            this.state
-        let displayName = this.getDisplayName(sortBy)
-        return (
-            <div className="type-based-sort-box" style={{ width: width }}>
-                <div className="type-based-sort-label">
-                    {/*<Icon icon={'sort'} title={'Sort'} size={14} />*/}
-                    <Icon
-                        icon={sortOrder === 'asc' ? 'sort_up' : 'sort_down'}
-                        title={sortOrder === 'asc' ? 'Sort Up' : 'Sort Down'}
-                        size={14}
-                    />
-                </div>
-                <div className="type-based-sort-drop-down-box">
-                    <Select
-                        size={'small'}
-                        disabled={disabled === true}
-                        value={sortBy}
-                        required
-                        displayEmpty
-                        onChange={(e) => this.handleChange(e)}
-                        renderValue={(value) => {
-                            return (
-                                <MyTooltip title={displayName}>
-                                    <div className="my-dropdown-display-container">
-                                        <div className="my-dropdown-display-value">
-                                            {displayName}
-                                        </div>
+    const { disabled, placeHolder, width } = props
+    const displayName = getDisplayName(sortBy)
+
+    return (
+        <div className="type-based-sort-box" style={{ width: width }}>
+            <div className="type-based-sort-label">
+                {/*<Icon icon={'sort'} title={'Sort'} size={14} />*/}
+                <Icon
+                    icon={sortOrder === 'asc' ? 'sort_up' : 'sort_down'}
+                    title={sortOrder === 'asc' ? 'Sort Up' : 'Sort Down'}
+                    size={14}
+                />
+            </div>
+            <div className="type-based-sort-drop-down-box">
+                <Select
+                    size={'small'}
+                    disabled={disabled === true}
+                    value={sortBy}
+                    required
+                    displayEmpty
+                    onChange={(e) => handleChange(e)}
+                    renderValue={(value) => {
+                        return (
+                            <MyTooltip title={displayName}>
+                                <div className="my-dropdown-display-container">
+                                    <div className="my-dropdown-display-value">
+                                        {displayName}
                                     </div>
-                                </MyTooltip>
-                            )
-                        }}
-                        className="my-dropdown-box"
-                    >
-                        {placeHolder && (
-                            <MenuItem disabled value="">
-                                {placeHolder}
-                            </MenuItem>
-                        )}
-                        <div className="my-drop-down-group-title">
-                            {'Sort by'}
-                        </div>
-                        {sortByOptions.map((eachItem) =>
-                            sortBy === eachItem.MenuName ||
-                            sortBy === eachItem.Name ? (
-                                <MenuItem value={eachItem.Name}>
-                                    <div className={'my-drop-down-item active'}>
-                                        <div className="my-drop-down-item-label">
-                                            {eachItem.Name}
-                                        </div>
-                                        <Icon
-                                            icon="check_circle_outline"
-                                            size={14}
-                                            className="my-drop-down-item-check-icon"
-                                        />
-                                    </div>
-                                </MenuItem>
-                            ) : (
-                                <MenuItem value={eachItem.Name}>
-                                    <div className={'my-drop-down-item'}>
-                                        <div className="my-drop-down-item-label">
-                                            {eachItem.Name}
-                                        </div>
-                                    </div>
-                                </MenuItem>
-                            )
-                        )}
-                        <Divider />
-                        <div className="my-drop-down-group-title">
-                            {'Sort order'}
-                        </div>
-                        {sortOrderOptions.map((eachItem) => (
+                                </div>
+                            </MyTooltip>
+                        )
+                    }}
+                    className="my-dropdown-box"
+                >
+                    {placeHolder && (
+                        <MenuItem disabled value="">
+                            {placeHolder}
+                        </MenuItem>
+                    )}
+                    <div className="my-drop-down-group-title">{'Sort by'}</div>
+                    {sortByOptions.map((eachItem) =>
+                        sortBy === eachItem.MenuName ||
+                        sortBy === eachItem.Name ? (
                             <MenuItem value={eachItem.Name}>
-                                <div className="my-drop-down-item">
+                                <div className={'my-drop-down-item active'}>
                                     <div className="my-drop-down-item-label">
                                         {eachItem.Name}
                                     </div>
-                                    {sortOrder === eachItem.MenuName && (
-                                        <Icon
-                                            icon="check_circle_outline"
-                                            size={14}
-                                            className="my-drop-down-item-check-icon"
-                                        />
-                                    )}
+                                    <Icon
+                                        icon="check_circle_outline"
+                                        size={14}
+                                        className="my-drop-down-item-check-icon"
+                                    />
                                 </div>
                             </MenuItem>
-                        ))}
-                    </Select>
-                </div>
+                        ) : (
+                            <MenuItem value={eachItem.Name}>
+                                <div className={'my-drop-down-item'}>
+                                    <div className="my-drop-down-item-label">
+                                        {eachItem.Name}
+                                    </div>
+                                </div>
+                            </MenuItem>
+                        )
+                    )}
+                    <Divider />
+                    <div className="my-drop-down-group-title">
+                        {'Sort order'}
+                    </div>
+                    {sortOrderOptions.map((eachItem) => (
+                        <MenuItem value={eachItem.Name}>
+                            <div className="my-drop-down-item">
+                                <div className="my-drop-down-item-label">
+                                    {eachItem.Name}
+                                </div>
+                                {sortOrder === eachItem.MenuName && (
+                                    <Icon
+                                        icon="check_circle_outline"
+                                        size={14}
+                                        className="my-drop-down-item-check-icon"
+                                    />
+                                )}
+                            </div>
+                        </MenuItem>
+                    ))}
+                </Select>
             </div>
-        )
-    }
+        </div>
+    )
 }
+
 TypeBasedSort.defaultProps = {
     width: '150px',
     error: false,
@@ -272,3 +250,5 @@ TypeBasedSort.propTypes = {
     menuMaxHeight: PropTypes.number,
     sortBy: PropTypes.string,
 }
+
+export default TypeBasedSort

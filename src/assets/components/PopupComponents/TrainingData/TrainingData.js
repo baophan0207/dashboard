@@ -63,13 +63,11 @@ const TrainingData = () => {
     }, [header, dataPerPage])
 
     const handlePageChange = (pageNumber) => {
+        const startIndex = pageNumber * perPage - perPage
+        const endIndex = pageNumber * perPage
+
         setCurrentPage(pageNumber)
-        setDataPerPage(
-            filteredData.slice(
-                pageNumber * perPage - perPage,
-                pageNumber * perPage
-            )
-        )
+        setDataPerPage(filteredData.slice(startIndex, endIndex))
         setTotalPage(Math.ceil(filteredData.length / perPage))
     }
 
@@ -124,24 +122,19 @@ const TrainingData = () => {
     const onChangeSelectItem = (index, item) => {
         if (item.Visible === 'always') return
 
-        const nextValues = [...dropDownList]
-        nextValues[index].isSelected = !nextValues[index].isSelected
+        setDropDownList((prevList) => {
+            const updatedList = [...prevList]
+            updatedList[index].isSelected = !updatedList[index].isSelected
 
-        const nextHeaders = Headers.filter(
-            (_, idx) => nextValues[idx].isSelected
-        )
+            setSelectAllItems(updatedList.every((item) => item.isSelected))
+            setHeader(Headers.filter((_, idx) => updatedList[idx].isSelected))
 
-        setDropDownList(nextValues)
-        setSelectAllItems(
-            nextValues.length ===
-                nextValues.filter((item) => item.isSelected).length
-        )
-        setHeader(nextHeaders)
+            return updatedList
+        })
     }
 
     const onSortOrder = () => {
-        const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc'
-        setSortOrder(newSortOrder)
+        setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
         const newFilteredData = [...filteredData].reverse()
         setFilteredData(newFilteredData)
         setDataPerPage(newFilteredData.slice(0, perPage))
@@ -150,11 +143,13 @@ const TrainingData = () => {
 
     const onSortBy = (sortByValue) => {
         const nextSortBy = dropDownList.find((i) => i.MenuName === sortByValue)
-        const nextValues = [...filteredData].sort((firstItem, secondItem) =>
+        let nextValues = [...filteredData].sort((firstItem, secondItem) =>
             firstItem[nextSortBy.MenuName].localeCompare(
                 secondItem[nextSortBy.MenuName]
             )
         )
+
+        nextValues = sortOrder === 'asc' ? nextValues : nextValues.reverse()
 
         setSortBy(nextSortBy)
         setFilteredData(nextValues)

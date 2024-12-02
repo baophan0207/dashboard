@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import { Box, IconButton, Slider, Typography } from '@mui/material'
 
@@ -6,206 +6,235 @@ import Icon from '../../../IconLibrary/Icon'
 
 import './VideoPlayer.css'
 
-class VideoPlayer extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            videoUrl: '',
-            isPlaying: false,
-            volume: 50,
-            currentTime: 0,
-            duration: 0,
-            muted: false,
-            seeking: false,
+const VideoPlayer = (props) => {
+    const [isPlaying, setIsPlaying] = useState(false)
+    const [volume, setVolume] = useState(50)
+    const [currentTime, setCurrentTime] = useState(0)
+    const [duration, setDuration] = useState(0)
+    const [muted, setMuted] = useState(false)
+    const [seeking, setSeeking] = useState(false)
+
+    const videoRef = useRef()
+
+    useEffect(() => {
+        const video = videoRef.current
+        video.addEventListener('loadedmetadata', handleLoadDuration)
+        video.addEventListener('timeupdate', handleTimeUpdate)
+
+        // Add keyboard controls
+        const handleKeyPress = (e) => {
+            switch (e.key.toLowerCase()) {
+                case ' ':
+                case 'k':
+                    e.preventDefault()
+                    handlePlayPause()
+                    break
+                case 'f':
+                    handleFullScreen()
+                    break
+                case 'm':
+                    handleMuteUnmute()
+                    break
+                case 'arrowleft':
+                    handleSkip(-10)
+                    break
+                case 'arrowright':
+                    handleSkip(10)
+                    break
+                default:
+                    break
+            }
         }
-        this.videoRef = React.createRef()
-    }
 
-    componentDidMount() {
-        this.setState({ videoUrl: this.props.videoUrl })
-        this.videoRef.current.addEventListener(
-            'loadedmetadata',
-            this.handleLoadDuration
-        )
-        this.videoRef.current.addEventListener(
-            'timeupdate',
-            this.handleTimeUpdate
-        )
-    }
+        document.addEventListener('keydown', handleKeyPress)
 
-    componentWillUnmount() {
-        this.videoRef.current.removeEventListener(
-            'loadedmetadata',
-            this.handleLoadDuration
-        )
-        this.videoRef.current.removeEventListener(
-            'timeupdate',
-            this.handleTimeUpdate
-        )
-    }
-
-    handleLoadDuration = () => {
-        this.setState({ duration: this.videoRef.current.duration })
-    }
-
-    handleTimeUpdate = () => {
-        if (this.state.seeking) return
-        if (this.state.currentTime === this.state.duration) {
-            this.setState({ isPlaying: false })
+        return () => {
+            video.removeEventListener('loadedmetadata', handleLoadDuration)
+            video.removeEventListener('timeupdate', handleTimeUpdate)
+            document.removeEventListener('keydown', handleKeyPress)
         }
-        this.setState({ currentTime: this.videoRef.current.currentTime })
+    }, [])
+
+    const handleLoadDuration = () => {
+        setDuration(videoRef.current.duration)
     }
 
-    handleSeekChange = (event, newValue) => {
-        this.setState({ currentTime: newValue })
-    }
-
-    // Handle when user stops seeking
-    handleSeekCommitted = (event, newValue) => {
-        this.videoRef.current.currentTime = newValue
-        this.setState({ seeking: false })
-    }
-
-    handlePlayPause = () => {
-        const video = this.videoRef.current
-        if (this.state.isPlaying) {
-            video.pause()
-        } else {
-            video.play()
+    const handleTimeUpdate = () => {
+        if (seeking) return
+        const video = videoRef.current
+        if (video.currentTime === video.duration) {
+            setIsPlaying(false)
         }
-        this.setState({ isPlaying: !this.state.isPlaying })
+        setCurrentTime(video.currentTime)
     }
 
-    handleMuteUnmute = () => {
-        const video = this.videoRef.current
-
-        this.setState({ muted: !this.state.muted }, () => {
-            video.muted = this.state.muted
-        })
+    const handleSeekChange = (event, newValue) => {
+        setCurrentTime(newValue)
+        videoRef.current.currentTime = newValue
     }
 
-    handleVolumeChange = (e, newVolume) => {
-        this.setState({ volume: newVolume })
-        this.videoRef.current.volume = newVolume / 100
+    const handleSeekEnd = () => {
+        setSeeking(false)
     }
 
-    handleFullScreen = () => {
-        const video = this.videoRef.current
+    const handlePlayPause = () => {
+        const video = videoRef.current
+        if (!video) return
+
+        try {
+            if (isPlaying) {
+                video.pause()
+            } else {
+                video.play()
+            }
+            setIsPlaying(!isPlaying)
+        } catch (error) {
+            console.error('Error playing/pausing video:', error)
+            // Reset playing state if play failed
+            setIsPlaying(false)
+        }
+    }
+
+    const handleMuteUnmute = () => {
+        const video = videoRef.current
+        const newMutedState = !muted
+        video.muted = newMutedState
+        setMuted(newMutedState)
+    }
+
+    const handleVolumeChange = (e, newVolume) => {
+        setVolume(newVolume)
+        videoRef.current.volume = newVolume / 100
+        localStorage.setItem('videoVolume', newVolume.toString())
+    }
+
+    const handleFullScreen = () => {
+        const video = videoRef.current
         if (video.requestFullscreen) {
             video.requestFullscreen()
         }
     }
 
-    formatTime = (time) => {
+    const formatTime = (time) => {
         const minutes = Math.floor(time / 60)
         const seconds = Math.floor(time % 60)
         return `${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
     }
 
-    render() {
-        const { videoUrl, isPlaying, volume, muted, currentTime, duration } =
-            this.state
-
-        return (
-            <Box className="video-player-container" sx={{ flex: 1 }}>
-                {/*  Video Player  */}
-                <video
-                    ref={this.videoRef}
-                    onTimeUpdate={this.handleTimeUpdate}
-                    src={videoUrl}
-                    controls={false}
-                    className="video-player"
-                />
-                {/* Overlay Play/Pause Button */}
-                <div className="overlay" onClick={this.handlePlayPause}>
-                    <IconButton
-                        className="icon-button"
-                        sx={{
-                            width: '86px',
-                            height: '86px',
-                            borderWidth: '6px',
-                            borderColor: 'gray',
-                            backgroundColor: 'transparent',
-                            borderStyle: 'solid',
-                        }}
-                    >
-                        {this.state.isPlaying ? (
-                            <Icon icon={'pause'} size={32} /> // Pause button when playing
-                        ) : (
-                            <Icon icon={'play'} size={32} /> // Play button when paused
-                        )}
-                    </IconButton>
-                </div>
-                <Slider
-                    className="custom-slider"
-                    value={currentTime}
-                    max={duration}
-                    step={0.1}
-                    onChange={this.handleSeekChange}
-                    onChangeCommitted={this.handleSeekCommitted}
-                />
-                {/* Controls */}
-                <Box className="control-container">
-                    <Box className="control-content">
-                        {/* Play/Pause */}
-                        <IconButton
-                            className="icon-button"
-                            onClick={this.handlePlayPause}
-                        >
-                            {!isPlaying || currentTime === duration ? (
-                                <Icon icon={'play'} />
-                            ) : (
-                                <Icon icon={'pause'} />
-                            )}
-                        </IconButton>
-                        {/* Forward and backward */}
-                        <IconButton className="icon-button">
-                            <Icon icon={'left_arrow2'} />
-                        </IconButton>
-                        <IconButton className="icon-button">
-                            <Icon icon={'right_arrow2'} />
-                        </IconButton>
-                        {/* Volume */}
-                        <IconButton
-                            className="icon-button"
-                            onClick={this.handleMuteUnmute}
-                        >
-                            {volume === 0 || muted ? (
-                                <Icon icon={'mute'} />
-                            ) : (
-                                <Icon icon={'speaker'} />
-                            )}
-                        </IconButton>
-
-                        <Slider
-                            value={volume}
-                            onChange={this.handleVolumeChange}
-                            sx={{ width: 100 }}
-                            className="custom-slider"
-                        />
-                    </Box>
-
-                    <Box className="control-content">
-                        {/*  Current time  */}
-                        <Typography className="video-time">
-                            {this.formatTime(currentTime)}
-                            {' / '}
-                            {this.formatTime(duration)}
-                        </Typography>
-                        <IconButton className="icon-button">
-                            <Icon icon={'setting'} />
-                        </IconButton>
-                        <IconButton
-                            className="icon-button"
-                            onClick={this.handleFullScreen}
-                        >
-                            <Icon icon={'square_frame_workbench'} />
-                        </IconButton>
-                    </Box>
-                </Box>
-            </Box>
+    const handleSkip = (seconds) => {
+        const video = videoRef.current
+        video.currentTime = Math.min(
+            Math.max(video.currentTime + seconds, 0),
+            video.duration
         )
     }
+
+    return (
+        <Box className="video-player-container" sx={{ flex: 1 }}>
+            {/*  Video Player  */}
+            <video
+                ref={videoRef}
+                onTimeUpdate={handleTimeUpdate}
+                src={props.videoUrl}
+                controls={false}
+                className="video-player"
+            />
+            {/* Overlay Play/Pause Button */}
+            <div className="overlay" onClick={handlePlayPause}>
+                <IconButton
+                    className="icon-button"
+                    sx={{
+                        width: '86px',
+                        height: '86px',
+                        borderWidth: '6px',
+                        borderColor: 'gray',
+                        backgroundColor: 'transparent',
+                        borderStyle: 'solid',
+                    }}
+                >
+                    {isPlaying ? (
+                        <Icon icon={'pause'} size={32} /> // Pause button when playing
+                    ) : (
+                        <Icon icon={'play'} size={32} /> // Play button when paused
+                    )}
+                </IconButton>
+            </div>
+            <Slider
+                className="custom-slider"
+                value={currentTime}
+                max={duration}
+                step={0.1}
+                onChange={handleSeekChange}
+                onMouseUp={handleSeekEnd}
+                onTouchEnd={handleSeekEnd}
+            />
+            {/* Controls */}
+            <Box className="control-container">
+                <Box className="control-content">
+                    {/* Play/Pause */}
+                    <IconButton
+                        className="icon-button"
+                        onClick={handlePlayPause}
+                    >
+                        {!isPlaying || currentTime === duration ? (
+                            <Icon icon={'play'} />
+                        ) : (
+                            <Icon icon={'pause'} />
+                        )}
+                    </IconButton>
+                    {/* Forward and backward */}
+                    <IconButton
+                        className="icon-button"
+                        onClick={() => handleSkip(-10)}
+                    >
+                        <Icon icon={'left_arrow2'} />
+                    </IconButton>
+                    <IconButton
+                        className="icon-button"
+                        onClick={() => handleSkip(10)}
+                    >
+                        <Icon icon={'right_arrow2'} />
+                    </IconButton>
+                    {/* Volume */}
+                    <IconButton
+                        className="icon-button"
+                        onClick={handleMuteUnmute}
+                    >
+                        {volume === 0 || muted ? (
+                            <Icon icon={'mute'} />
+                        ) : (
+                            <Icon icon={'speaker'} />
+                        )}
+                    </IconButton>
+
+                    <Slider
+                        value={volume}
+                        onChange={handleVolumeChange}
+                        sx={{ width: 100 }}
+                        className="custom-slider"
+                    />
+                </Box>
+
+                <Box className="control-content">
+                    {/*  Current time  */}
+                    <Typography className="video-time">
+                        {formatTime(currentTime)}
+                        {' / '}
+                        {formatTime(duration)}
+                    </Typography>
+                    <IconButton className="icon-button">
+                        <Icon icon={'setting'} />
+                    </IconButton>
+                    <IconButton
+                        className="icon-button"
+                        onClick={handleFullScreen}
+                    >
+                        <Icon icon={'square_frame_workbench'} />
+                    </IconButton>
+                </Box>
+            </Box>
+        </Box>
+    )
 }
 
 export default VideoPlayer

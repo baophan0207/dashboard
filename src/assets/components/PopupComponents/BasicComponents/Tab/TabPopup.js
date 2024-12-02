@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+
 import { Box } from '@mui/material'
 import { TabContext, TabPanel } from '@mui/lab'
+
 import TabBar from '../../../CommonComponents/BasicComponents/TabBar/TabBar'
 import './TabPopup.css'
 import PropTypes from 'prop-types'

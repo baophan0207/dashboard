@@ -61,7 +61,7 @@
  * /
  */
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './StyleSheet.css'
 import PropTypes from 'prop-types'
 import SearchBox from '../SearchBox/SearchBox'
@@ -69,26 +69,22 @@ import Icon from '../../../../IconLibrary/Icon'
 import TypeBasedSort from './TypeBasedSort'
 import { MultiColumnsSearchBox } from '../CommonMethods'
 
-export default class SearchBar extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            // sortOrder: "Ascending",
-            sortByOptions: [
-                { Name: 'Name', MenuName: 'name' },
-                { Name: 'Created at', MenuName: 'created_at' },
-            ],
-            sortBy: 'name',
-            searchValue: this.props.searchValue,
-            sortOrder: 'asc',
-            disabledSort: false,
-            sortByHashmap: {},
-            searchBy: '',
-            searchByOptions: [],
-        }
-    }
+const SearchBar = (props) => {
+    const [state, setState] = useState({
+        sortByOptions: [
+            { Name: 'Name', MenuName: 'name' },
+            { Name: 'Created at', MenuName: 'created_at' },
+        ],
+        sortBy: 'name',
+        searchValue: props.searchValue,
+        sortOrder: 'asc',
+        disabledSort: false,
+        sortByHashmap: {},
+        searchBy: '',
+        searchByOptions: [],
+    })
 
-    componentDidMount() {
+    useEffect(() => {
         const {
             searchValue,
             disabledSearchBtn,
@@ -98,8 +94,10 @@ export default class SearchBar extends React.Component {
             sortByOptions,
             searchBy,
             searchByOptions,
-        } = this.props
-        this.setState({
+        } = props
+
+        setState((prev) => ({
+            ...prev,
             sortByOptions,
             searchValue,
             disabledSearchBtn,
@@ -108,121 +106,98 @@ export default class SearchBar extends React.Component {
             disabledSort: disabledSort === true,
             searchBy,
             searchByOptions,
-        })
-    }
+        }))
+    }, [props])
 
-    componentWillReceiveProps(nextProps, nextContext) {
-        const {
-            searchValue,
-            disabledSearchBtn,
-            sortBy,
-            sortOrder,
-            disabledSort,
-            sortByOptions,
-            searchBy,
-            searchByOptions,
-        } = nextProps
-        this.setState({
-            sortByOptions,
-            searchValue,
-            disabledSearchBtn,
-            sortBy,
-            sortOrder,
-            disabledSort: disabledSort === true,
-            searchBy,
-            searchByOptions,
-        })
-    }
+    const {
+        onSearch,
+        onFilter,
+        onSortOrder,
+        onSortBy,
+        searchBoxWidth,
+        searchBoxPlaceholder,
+        searchBarType,
+        sortType,
+        sortWidth,
+        searchBox,
+        sort,
+        filter,
+        handleSearchOnClick,
+        onChangeSearchColumnName,
+    } = props
 
-    render() {
-        let {
-            onSearch,
-            onFilter,
-            onSortOrder,
-            onSortBy,
-            searchBoxWidth,
-            searchBoxPlaceholder,
-            searchBarType,
-            sortType,
-            sortWidth,
-            searchBox,
-            sort,
-            filter,
-            handleSearchOnClick,
-            onChangeSearchColumnName,
-        } = this.props
-        const { disabled = false, searchValue, disabledSearchBtn } = this.state
-        const {
-            sortBy,
-            sortByOptions,
-            sortOrder,
-            disabledSort,
-            searchBy,
-            searchByOptions,
-        } = this.state
-        return (
-            <div
-                className={
-                    disabled === true
-                        ? 'default-search-bar disabled'
-                        : 'default-search-bar'
-                }
-            >
-                {searchBox === true ? (
-                    searchBarType === 'default' ? (
-                        <SearchBox
-                            width={searchBoxWidth}
-                            onSearch={onSearch}
-                            // handleSearchOnClick={handleSearchOnClick}
-                        />
-                    ) : (
-                        <MultiColumnsSearchBox
-                            width={searchBoxWidth}
-                            itemList={searchByOptions}
-                            searchColumnName={searchBy}
-                            searchValue={searchValue}
-                            value={searchValue}
-                            disabled={disabledSearchBtn}
-                            placeholder={searchBoxPlaceholder}
-                            disableSearchBtn={disabledSearchBtn}
-                            handleChangeSearchColumnName={
-                                onChangeSearchColumnName
-                            }
-                            handleChangeSearchValue={onSearch}
-                            handleSearchOnClick={handleSearchOnClick}
-                        />
-                    )
-                ) : null}
-                {sort && sortType === 'default' ? (
-                    <button
-                        disabled={disabledSort}
-                        className="menu-button"
-                        onClick={onSortOrder}
-                    >
-                        <Icon
-                            icon={sortOrder === 'asc' ? 'sort_up' : 'sort_down'}
-                            size={14}
-                        />
-                    </button>
-                ) : (
-                    <TypeBasedSort
-                        disabled={disabledSort}
-                        width={sortWidth}
-                        sortByOptions={sortByOptions}
-                        sortBy={sortBy}
-                        sortOrder={sortOrder}
-                        onChange={(sortBy) => onSortBy(sortBy)}
-                        onSortOrderChange={onSortOrder}
+    const {
+        disabled = false,
+        searchValue,
+        disabledSearchBtn,
+        sortBy,
+        sortByOptions,
+        sortOrder,
+        disabledSort,
+        searchBy,
+        searchByOptions,
+    } = state
+
+    return (
+        <div
+            className={
+                disabled === true
+                    ? 'default-search-bar disabled'
+                    : 'default-search-bar'
+            }
+        >
+            {searchBox === true ? (
+                searchBarType === 'default' ? (
+                    <SearchBox
+                        width={searchBoxWidth}
+                        onSearch={onSearch}
+                        // handleSearchOnClick={handleSearchOnClick}
                     />
-                )}
-                {filter && (
-                    <button className="menu-button" onClick={onFilter}>
-                        <Icon icon="filter" size={14} />
-                    </button>
-                )}
-            </div>
-        )
-    }
+                ) : (
+                    <MultiColumnsSearchBox
+                        width={searchBoxWidth}
+                        itemList={searchByOptions}
+                        searchColumnName={searchBy}
+                        searchValue={searchValue}
+                        value={searchValue}
+                        disabled={disabledSearchBtn}
+                        placeholder={searchBoxPlaceholder}
+                        disableSearchBtn={disabledSearchBtn}
+                        handleChangeSearchColumnName={onChangeSearchColumnName}
+                        handleChangeSearchValue={onSearch}
+                        handleSearchOnClick={handleSearchOnClick}
+                    />
+                )
+            ) : null}
+            {sort && sortType === 'default' ? (
+                <button
+                    disabled={disabledSort}
+                    className="menu-button"
+                    onClick={onSortOrder}
+                >
+                    <Icon
+                        icon={sortOrder === 'asc' ? 'sort_up' : 'sort_down'}
+                        size={14}
+                    />
+                </button>
+            ) : (
+                <TypeBasedSort
+                    disabled={disabledSort}
+                    width={sortWidth}
+                    sortByOptions={sortByOptions}
+                    sortBy={sortBy}
+                    sortOrder={sortOrder}
+                    onChange={(sortBy) => onSortBy(sortBy)}
+                    onSortOrderChange={onSortOrder}
+                />
+            )}
+            {filter && (
+                <button className="menu-button" onClick={onFilter}>
+                    <Icon icon="filter" size={14} />
+                </button>
+            )}
+        </div>
+    )
 }
 
 SearchBar.defaultProps = {
@@ -260,3 +235,5 @@ SearchBar.propTypes = {
     filter: PropTypes.bool,
     sort: PropTypes.bool,
 }
+
+export default SearchBar

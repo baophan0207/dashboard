@@ -146,7 +146,7 @@ const MyCheckDrop = (props) => {
                     }}
                 >
                     {values.map((eachItem, index) => (
-                        <MenuItem value={eachItem.Name}>
+                        <MenuItem value={eachItem.Name} key={index}>
                             <div className="check-drop-down-item">
                                 <MyCheckbox
                                     checked={eachItem.isSelected}

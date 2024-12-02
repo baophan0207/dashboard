@@ -88,11 +88,13 @@ const ClassificationTree = () => {
 
         if (typeof filteredData[0][nextSortBy.MenuName] === 'boolean') return
 
-        const nextValues = [...filteredData].sort((firstItem, secondItem) =>
+        let nextValues = [...filteredData].sort((firstItem, secondItem) =>
             firstItem[nextSortBy.MenuName].localeCompare(
                 secondItem[nextSortBy.MenuName]
             )
         )
+
+        nextValues = sortOrder === 'asc' ? nextValues : nextValues.reverse()
 
         setSortBy(nextSortBy)
         setFilteredData(nextValues)
