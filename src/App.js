@@ -1,50 +1,67 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import SysPopup from './assets/components/CommonComponents/BasicComponents/SysPopup/SysPopup'
 import Button from './assets/components/CommonComponents/Layout/Button'
 import Help from './assets/components/PopupComponents/Help/Help'
 import DataForModel from './assets/components/PopupComponents/DataForModel/DataForModel'
+import FileViewer from './assets/components/CommonComponents/FileViewer/FileViewer'
 
-const App = () => {
-    const [isOpenPopup, setIsOpenPopup] = useState(false)
-    const [isOpenPopupDataModel, setIsOpenPopupDataModel] = useState(true)
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isOpenPopup: false,
+            isOpenPopupDataModel: false,
+        }
+    }
 
-    return (
-        <div>
-            <Button
-                type="primary"
-                disabled={false}
-                title="Help"
-                onClick={() => setIsOpenPopup(true)}
-            >
-                Help
-            </Button>
-            <Button
-                type="primary"
-                disabled={false}
-                title="Data for Model 3"
-                onClick={() => setIsOpenPopupDataModel(true)}
-            >
-                Data for Model 3
-            </Button>
-            <SysPopup
-                Open={isOpenPopup}
-                Title={'Help'}
-                onClose={() => setIsOpenPopup(false)}
-                // LayoutWidth={'100%'}
-            >
-                <Help />
-            </SysPopup>
-            <SysPopup
-                Open={isOpenPopupDataModel}
-                Title={'Data for Model 3'}
-                onClose={() => setIsOpenPopupDataModel(false)}
-                // LayoutWidth={'100%'}
-            >
-                <DataForModel />
-            </SysPopup>
-        </div>
-    )
+    render() {
+        const { isOpenPopup, isOpenPopupDataModel } = this.state
+
+        return (
+            <div>
+                <Button
+                    type="primary"
+                    disabled={false}
+                    title="Help"
+                    onClick={() => this.setState({ isOpenPopup: !isOpenPopup })}
+                >
+                    Help
+                </Button>
+                <Button
+                    type="primary"
+                    disabled={false}
+                    title="Data for Model 3"
+                    onClick={() =>
+                        this.setState({
+                            isOpenPopupDataModel: !isOpenPopupDataModel,
+                        })
+                    }
+                >
+                    Data for Model 3
+                </Button>
+                <SysPopup
+                    Open={isOpenPopup}
+                    Title={'Help'}
+                    onClose={() => this.setState({ isOpenPopup: !isOpenPopup })}
+                >
+                    <Help />
+                </SysPopup>
+                <SysPopup
+                    Open={isOpenPopupDataModel}
+                    Title={'Data for Model 3'}
+                    onClose={() =>
+                        this.setState({
+                            isOpenPopupDataModel: !isOpenPopupDataModel,
+                        })
+                    }
+                >
+                    <DataForModel />
+                </SysPopup>
+                <FileViewer />
+            </div>
+        )
+    }
 }
 
 export default App
