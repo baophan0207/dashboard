@@ -1,150 +1,65 @@
-import React from 'react'
-import DocViewer, { DocViewerRenderers } from 'react-doc-viewer'
+import React, { Component } from 'react'
+import DocViewer, { DocViewerRenderers } from '@cyntler/react-doc-viewer'
+import '@cyntler/react-doc-viewer/dist/index.css'
+import { PropTypes } from 'prop-types'
 import './FileViewer.css'
 
-export default class FileViewer extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            docs: [],
-            isOpen: false,
-            isDragging: false,
-        }
-    }
-
-    handleFileChange = (event) => {
-        const file = event.target.files[0]
-        if (file) {
-            this.processFile(file)
-        }
-    }
-
-    handleDragEnter = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        this.setState({ isDragging: true })
-    }
-
-    handleDragLeave = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        this.setState({ isDragging: false })
-    }
-
-    handleDragOver = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-    }
-
-    handleDrop = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        this.setState({ isDragging: false })
-
-        const file = e.dataTransfer.files[0]
-        if (file) {
-            this.processFile(file)
-        }
-    }
-
-    processFile = (file) => {
-        const fileType = file.name.split('.').pop().toLowerCase()
-        const allowedTypes = ['pdf', 'doc', 'docx']
-
-        if (!allowedTypes.includes(fileType)) {
-            alert('Please upload only PDF or Word documents')
-            return
-        }
-
-        const objectUrl = URL.createObjectURL(file)
-        this.setState({
-            docs: [
-                {
-                    uri: objectUrl,
-                    fileType: fileType,
-                    fileName: file.name,
-                },
-            ],
-            isOpen: true,
-        })
-    }
-
-    handleClose = () => {
-        this.setState({ isOpen: false })
-        if (this.state.docs.length > 0) {
-            this.state.docs.forEach((doc) => {
-                if (doc.uri) URL.revokeObjectURL(doc.uri)
-            })
-            this.setState({ docs: [] })
-        }
-    }
-
+export default class FileViewer extends Component {
     componentWillUnmount() {
-        if (this.state.docs.length > 0) {
-            this.state.docs.forEach((doc) => {
-                if (doc.uri) URL.revokeObjectURL(doc.uri)
+        const { documents } = this.props
+        if (documents) {
+            documents.forEach((doc) => {
+                if (doc.uri && !doc.uri.startsWith('http')) {
+                    URL.revokeObjectURL(doc.uri)
+                }
             })
         }
     }
 
     render() {
-        const { docs, isOpen, isDragging } = this.state
+        const { documents, onClose } = this.props
 
         return (
-            <div className="file-viewer-container">
-                <div
-                    className={`drop-zone ${isDragging ? 'dragging' : ''}`}
-                    onDragEnter={this.handleDragEnter}
-                    onDragLeave={this.handleDragLeave}
-                    onDragOver={this.handleDragOver}
-                    onDrop={this.handleDrop}
+            <div className="file-viewer-wrapper">
+                <button
+                    className="close-button"
+                    onClick={onClose}
+                    aria-label="Close viewer"
                 >
-                    <div className="upload-area">
-                        <i className="upload-icon">📄</i>
-                        <p>Drag & Drop your document here or</p>
-                        <label className="upload-button">
-                            Choose File
-                            <input
-                                type="file"
-                                onChange={this.handleFileChange}
-                                accept=".pdf,.docx,.doc"
-                                style={{ display: 'none' }}
-                            />
-                        </label>
-                        <p className="file-types">
-                            Supported files: PDF, DOC, DOCX
-                        </p>
-                    </div>
-                </div>
-
-                {isOpen && docs.length > 0 && (
-                    <div className="viewer-container">
-                        <button
-                            onClick={this.handleClose}
-                            className="close-button"
-                            aria-label="Close viewer"
-                        >
-                            ✕
-                        </button>
-                        <DocViewer
-                            documents={docs}
-                            pluginRenderers={DocViewerRenderers}
-                            config={{
-                                header: {
-                                    disableHeader: false,
-                                    disableFileName: false,
-                                },
-                            }}
-                            style={{
-                                height: '100%',
-                                width: '100%',
-                                maxWidth: '1200px',
-                                margin: '0 auto',
-                            }}
-                        />
-                    </div>
-                )}
+                    ×
+                </button>
+                <DocViewer
+                    documents={documents}
+                    pluginRenderers={DocViewerRenderers}
+                    config={{
+                        header: {
+                            disableHeader: false,
+                            disableFileName: false,
+                        },
+                        pdfZoom: {
+                            defaultZoom: 1.1,
+                            zoomJump: 0.2,
+                        },
+                        pdfVerticalScrollByDefault: true,
+                    }}
+                />
             </div>
         )
     }
+}
+
+FileViewer.defaultProps = {
+    documents: [
+        {
+            uri: 'https://apps.blinx.ai/sample_doc_file.docx',
+            fileType: 'docx',
+            fileName: 'sample_doc_file.docx',
+        },
+    ],
+    onClose: () => {},
+}
+
+FileViewer.propTypes = {
+    documents: PropTypes.array.isRequired,
+    onClose: PropTypes.func,
 }

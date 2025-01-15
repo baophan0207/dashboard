@@ -1,0 +1,99 @@
+// Variables
+@primary-color: #0066cc;
+@border-color: #ddd;
+@text-color: #666;
+@dropzone-border: #ccc;
+@container-width: 600px;
+
+// Mixins
+.transition(@props: all) {
+    transition: @props 0.3s ease;
+}
+
+.flex-center() {
+    display: flex;
+    align-items: center;
+}
+
+.flex-column() {
+    display: flex;
+    flex-direction: column;
+}
+
+// Container styles
+.document-upload-container {
+    width: 100%;
+    max-width: @container-width;
+    margin: 0 auto;
+}
+
+// URL input section
+.url-input-container {
+    margin-bottom: 20px;
+    .flex-center();
+    gap: 10px;
+}
+
+.document-url-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid @border-color;
+    border-radius: 4px;
+    font-size: 14px;
+
+    &:focus {
+        outline: none;
+        border-color: @primary-color;
+        box-shadow: 0 0 0 2px fade(@primary-color, 20%);
+    }
+}
+
+// Button styles
+.add-document-btn {
+    padding: 8px 16px;
+    background: @primary-color;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    .transition(background);
+
+    &:hover {
+        background: darken(@primary-color, 10%);
+    }
+
+    &:active {
+        background: darken(@primary-color, 15%);
+    }
+}
+
+// Dropzone styles
+.dropzone {
+    border: 2px dashed @dropzone-border;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    .transition();
+
+    &.active {
+        border-color: @primary-color;
+        background-color: fade(@primary-color, 10%);
+    }
+
+    .upload-content {
+        .flex-column();
+        align-items: center;
+        gap: 10px;
+    }
+
+    .upload-icon {
+        font-size: 48px;
+    }
+
+    .file-types {
+        color: @text-color;
+        font-size: 14px;
+    }
+}
