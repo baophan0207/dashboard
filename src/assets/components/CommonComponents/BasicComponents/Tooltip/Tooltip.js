@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 export class MyTooltip extends Component {
 
     render() {
-        const {title, tooltipType, isArrow, position, style} = this.props
+        const {title, tooltipType, isArrow, position, style, maxWidth} = this.props
 
         const gettingColors = () => {
             switch (tooltipType) {
@@ -37,15 +37,17 @@ export class MyTooltip extends Component {
                 fontSize: style ? style.fontSize : 10,
                 borderRadius: "3px",
                 boxShadow: "0px 1px 10px 0px rgba(0, 0, 0, 0.25)",
+                maxWidth: maxWidth
             },
         }))(Tooltip);
 
         return (
-            position ?
+            position?
                 <CustomToolTip arrow={isArrow} title={title} placement={position}>
                     {this.props.children}
                 </CustomToolTip>
                 :
+
                 <CustomToolTip arrow={isArrow} title={title}>
                     {this.props.children}
                 </CustomToolTip>
@@ -58,13 +60,16 @@ MyTooltip.defaultProps = {
     isArrow: true,
     tooltipType: "normal",
     position: "",
+    maxWidth: 300
 }
+
 
 MyTooltip.propTypes = {
     title: PropTypes.string.isRequired,
     isArrow: PropTypes.bool,
+    maxWidth: PropTypes.number,
     tooltipType: PropTypes.oneOf(["error", "warning", "normal", "information"]).isRequired,
-    position: PropTypes.oneOf(["", 'bottom-end',
+    position: PropTypes.oneOf(['bottom-end',
         'bottom-start',
         'bottom',
         'left-end',

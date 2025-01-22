@@ -1,11 +1,13 @@
 import React from 'react'
+import MyCalendar from './assets/components/MyCalendar/MyCalendar'
 
-import SysPopup from './assets/components/CommonComponents/BasicComponents/SysPopup/SysPopup'
+// import SysPopup from './assets/components/CommonComponents/BasicComponents/SysPopup/SysPopup'
 import Button from './assets/components/CommonComponents/Layout/Button'
-import Help from './assets/components/PopupComponents/Help/Help'
-import DataForModel from './assets/components/PopupComponents/DataForModel/DataForModel'
-import DocumentPreview from './assets/components/DocumentPreview/DocumentPreview'
-import FileViewer from './assets/components/CommonComponents/FileViewer/FileViewer'
+// import Help from './assets/components/PopupComponents/Help/Help'
+// import DataForModel from './assets/components/PopupComponents/DataForModel/DataForModel'
+// import DocumentPreview from './assets/components/DocumentPreview/DocumentPreview'
+// import FileViewer from './assets/components/CommonComponents/FileViewer/FileViewer'
+import { MyTooltip } from './assets/components/CommonComponents/BasicComponents/Tooltip/Tooltip'
 
 class App extends React.Component {
     constructor(props) {
@@ -76,7 +78,12 @@ class App extends React.Component {
             this.state
 
         return (
-            <div className="app-container" style={{ height: '90vh' }}>
+            <div
+                style={{
+                    height: '100vh',
+                    overflow: 'auto',
+                }}
+            >
                 {/* <Button
                     type="primary"
                     disabled={false}
@@ -115,7 +122,7 @@ class App extends React.Component {
                 >
                     <DataForModel />
                 </SysPopup> */}
-                {!isViewerOpen && (
+                {/* {!isViewerOpen && (
                     <DocumentPreview onFileSelect={this.handleFileSelect} />
                 )}
                 {isViewerOpen && (
@@ -123,7 +130,8 @@ class App extends React.Component {
                         documents={documents}
                         onClose={this.handleViewerClose}
                     />
-                )}
+                )} */}
+                <MyCalendar />
             </div>
         )
     }

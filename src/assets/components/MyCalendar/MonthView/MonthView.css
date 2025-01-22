@@ -1,0 +1,17 @@
+.rbc-month-view .rbc-header {
+  background-color: var(--bg-color);
+  color: var(--heading-color);
+  padding: 6px 0;
+}
+.rbc-month-view .rbc-row-content {
+  height: 100%;
+}
+.rbc-month-view .rbc-row-content .rbc-date-cell {
+  margin: 6px;
+}
+.rbc-month-view .rbc-event {
+  background-color: transparent;
+}
+.rbc-month-view .rbc-row {
+  overflow: hidden;
+}

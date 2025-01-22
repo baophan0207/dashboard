@@ -4,4 +4,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.default-tooltip-box {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.default-tooltip-box .default-tooltip-box-title {
+  font-family: var(--font-family);
+  font-size: var(--default-font-size);
+  color: var(--primary-color);
+  font-weight: bold;
+}
+.default-tooltip-box .default-tooltip-box-description {
+  font-family: var(--font-family);
+  color: var(--font-color);
+  font-weight: normal;
+  font-size: var(--font-size-small);
+  line-height: 18px;
+}
 /*# sourceMappingURL=Tooltip.css.map */
