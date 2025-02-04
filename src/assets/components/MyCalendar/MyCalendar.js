@@ -1,18 +1,25 @@
 import React from 'react'
 
-import MyDropDown from '../CommonComponents/BasicComponents/MyDropDown/MyDropDown'
-import ToggleButton from '../CommonComponents/BasicComponents/ToggleButton/ToggleButton'
-import CalendarTimePicker from './CalendarTimePicker'
-import CustomYearView from './YearView/CustomYearView'
 import MonthView from './MonthView/MonthView'
 import WeekView from './WeekView/WeekView'
+
+import events from './events'
+import CustomToolBar from './CustomToolBar/CustomToolBar'
+import { Calendar, momentLocalizer } from 'react-big-calendar'
+import moment from 'moment'
+import CustomYear from './YearView/YearView'
+import YearView from './YearView/CustomYearView'
+import Week from './WeekView/CustomWeekView'
+
+const localizer = momentLocalizer(moment)
 
 class MyCalendar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             showOptionSelected: this.showOptionValues[0],
-            viewByActiveOption: this.viewByOptionValues[1].name,
+            viewByActiveOption: this.viewByOptionValues[0].name,
+            date: new Date(),
         }
     }
 
@@ -40,59 +47,6 @@ class MyCalendar extends React.Component {
         },
     ]
 
-    events = [
-        {
-            title: 'Event 1',
-            start: new Date(2025, 0, 1),
-            end: new Date(2025, 0, 2),
-        },
-        {
-            title: 'Event 2',
-            start: new Date(2025, 0, 1),
-            end: new Date(2025, 0, 2),
-        },
-        {
-            title: 'Event 3',
-            start: new Date(2025, 0, 1),
-            end: new Date(2025, 0, 2),
-        },
-        {
-            title: 'Event 1',
-            start: new Date(2025, 0, 1),
-            end: new Date(2025, 0, 2),
-        },
-        {
-            title: 'Event 2',
-            start: new Date(2025, 0, 1),
-            end: new Date(2025, 0, 2),
-        },
-        {
-            title: 'Event 3',
-            start: new Date(2025, 0, 1),
-            end: new Date(2025, 0, 2),
-        },
-        {
-            title: 'Event 4',
-            start: new Date(2025, 0, 6),
-            end: new Date(2025, 0, 7),
-        },
-        {
-            title: 'Event 5',
-            start: new Date(2025, 0, 14),
-            end: new Date(2025, 0, 15),
-        },
-        {
-            title: 'Event 6',
-            start: new Date(2025, 0, 18),
-            end: new Date(2025, 0, 19),
-        },
-        {
-            title: 'Event 7',
-            start: new Date(2025, 0, 20),
-            end: new Date(2025, 0, 21),
-        },
-    ]
-
     onChangeShowOption = (e) => {
         const selectedValue = this.showOptionValues.find((s) => s.Name === e)
         this.setState({ showOptionSelected: selectedValue })
@@ -104,8 +58,15 @@ class MyCalendar extends React.Component {
         })
     }
 
+    handleViewChange = (view) => {
+        console.log('View changed to:', view)
+        // Add your logic here, e.g., updating state or triggering API calls
+    }
+
     render() {
-        const { showOptionSelected, viewByActiveOption } = this.state
+        const { showOptionSelected, viewByActiveOption, date } = this.state
+
+        const { handleCloseNewDeadLineWindow } = this.props
 
         return (
             <div
@@ -113,91 +74,75 @@ class MyCalendar extends React.Component {
                     padding: '16px',
                 }}
             >
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                    }}
-                >
-                    <div
-                        style={{
-                            display: 'flex',
-                        }}
-                    >
-                        <div style={{ marginRight: '12px' }}>
-                            <CalendarTimePicker time={'year'} />
-                        </div>
-                        {(viewByActiveOption === 'Month' ||
-                            viewByActiveOption !== 'Year') && (
-                            <div style={{ marginRight: '12px' }}>
-                                <CalendarTimePicker time={'month'} />
-                            </div>
-                        )}{' '}
-                        {viewByActiveOption === 'Week' && (
-                            <div>
-                                <CalendarTimePicker time={'week'} />
-                            </div>
-                        )}
-                    </div>
-                    <div
-                        style={{
-                            display: 'flex',
-                        }}
-                    >
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <span
-                                style={{
-                                    marginRight: '8px',
-                                }}
-                            >
-                                Show
-                            </span>
-                            <MyDropDown
-                                width="1000px"
-                                onChange={(e) => this.onChangeShowOption(e)}
-                                values={this.showOptionValues}
-                                selectedItem={showOptionSelected.Name}
-                            />
-                        </div>
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <span
-                                style={{
-                                    marginRight: '8px',
-                                }}
-                            >
-                                View by
-                            </span>
-                            <ToggleButton
-                                options={this.viewByOptionValues}
-                                activeOption={viewByActiveOption}
-                                onClickOptionHandler={(e) =>
-                                    this.onClickViewByOption(e)
-                                }
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div>
+                {/* <CustomToolBar
+                    showOptionSelected={showOptionSelected}
+                    viewByActiveOption={viewByActiveOption}
+                    onChangeShowOption={this.onChangeShowOption}
+                    onClickViewByOption={this.onClickViewByOption}
+                />
+                <div style={{ paddingTop: '16px' }}>
                     {this.state.viewByActiveOption === 'Year' ? (
                         <>
-                            <h1>Custom Year View</h1>
-                            <CustomYearView events={this.events} />
+                            <CustomYear
+                                events={events}
+                                handleCloseNewDeadLineWindow={
+                                    handleCloseNewDeadLineWindow
+                                }
+                                localizer={localizer}
+                            />
                         </>
                     ) : this.state.viewByActiveOption === 'Month' ? (
-                        <MonthView events={this.events} />
+                        <MonthView
+                            events={events}
+                            handleCloseNewDeadLineWindow={
+                                handleCloseNewDeadLineWindow
+                            }
+                        />
                     ) : (
-                        <WeekView events={this.events} />
+                        <WeekView
+                            events={events}
+                            handleCloseNewDeadLineWindow={
+                                handleCloseNewDeadLineWindow
+                            }
+                        />
                     )}
+                </div> */}
+                <div style={{ height: 600 }}>
+                    <Calendar
+                        localizer={localizer}
+                        events={events}
+                        date={date}
+                        onNavigate={(newDate) => this.setDate(newDate)} // Update state on navigation
+                        components={{
+                            toolbar: (props) => (
+                                <div style={{ marginBottom: '8px' }}>
+                                    <CustomToolBar
+                                        {...props}
+                                        date={date}
+                                        setDate={this.setDate}
+                                        showOptionSelected={showOptionSelected}
+                                        viewByActiveOption={viewByActiveOption}
+                                        onChangeShowOption={
+                                            this.onChangeShowOption
+                                        }
+                                        onClickViewByOption={
+                                            this.onClickViewByOption
+                                        }
+                                        onView={this.onClickViewByOption}
+                                    />
+                                </div>
+                            ),
+                        }}
+                        view={viewByActiveOption.toLowerCase()}
+                        views={{
+                            year: YearView,
+                            month: true,
+                            week: Week,
+                            day: false,
+                        }}
+                        onView={this.handleViewChange}
+                        onSelectSlot={handleCloseNewDeadLineWindow}
+                    />
                 </div>
             </div>
         )

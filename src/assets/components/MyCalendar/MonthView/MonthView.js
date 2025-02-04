@@ -15,16 +15,6 @@ const menuList = [
     { Name: 'Mark as Accomplished', Icon: 'info' },
 ]
 
-const eventDetail = {
-    Title: 'Maintenance Fee Payment',
-    PatentID: 'US123456789',
-    Fee: '$1600',
-    Interval: '1st Maintenance Payment',
-    GracePeriod: '6 months',
-    AssignedTo: 'Alice (In-House Counsel)',
-    Status: 'complete',
-}
-
 class Avatar extends React.Component {
     constructor(props) {
         super(props)
@@ -49,7 +39,6 @@ class Avatar extends React.Component {
                     height: 24,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    // lineHeight: '50px',
                     border: '1px solid #ccc',
                     borderRadius: '50%',
                     overflow: 'hidden',
@@ -88,8 +77,18 @@ class CustomEvent extends React.Component {
                     borderRadius: '12px',
                     display: 'flex',
                     alignItems: 'center',
-                    backgroundColor: '#87ebdc',
-                    color: 'green',
+                    backgroundColor:
+                        event.data.DeadlineType === 'maintenance-fee'
+                            ? '#dbf5f2'
+                            : event.data.DeadlineType === 'office-action'
+                              ? '#f9e9fc'
+                              : '#d7e2fb',
+                    color:
+                        event.data.DeadlineType === 'maintenance-fee'
+                            ? '#4db699'
+                            : event.data.DeadlineType === 'office-action'
+                              ? '#be62d0'
+                              : '#4c669f',
                 }}
             >
                 <MyTooltip
@@ -97,13 +96,20 @@ class CustomEvent extends React.Component {
                         <div style={{ margin: '8px' }}>
                             <div
                                 style={{
-                                    color: 'green',
+                                    color:
+                                        event.data.DeadlineType ===
+                                        'maintenance-fee'
+                                            ? '#4db699'
+                                            : event.data.DeadlineType ===
+                                                'office-action'
+                                              ? '#be62d0'
+                                              : '#4c669f',
                                     fontWeight: 'bold',
                                     margin: '6px 0',
                                     fontSize: '14px',
                                 }}
                             >
-                                {eventDetail.Title}
+                                {event.data?.Title}
                             </div>
                             <div style={{ display: 'flex' }}>
                                 <div
@@ -112,18 +118,24 @@ class CustomEvent extends React.Component {
                                         flexDirection: 'column',
                                     }}
                                 >
-                                    {Object.entries(eventDetail).map(([key]) =>
-                                        key !== 'Title' && key !== 'Status' ? (
-                                            <span
-                                                key={key}
-                                                style={{ margin: '6px 0' }}
-                                            >
-                                                {key}:
-                                            </span>
-                                        ) : (
-                                            <></>
-                                        )
-                                    )}
+                                    {event.data &&
+                                        Object.entries(event.data).map(
+                                            ([key]) =>
+                                                key !== 'Title' &&
+                                                key !== 'Status' &&
+                                                key !== 'DeadlineType' ? (
+                                                    <span
+                                                        key={key}
+                                                        style={{
+                                                            margin: '6px 0',
+                                                        }}
+                                                    >
+                                                        {key}:
+                                                    </span>
+                                                ) : (
+                                                    <></>
+                                                )
+                                        )}
                                 </div>
                                 <div
                                     style={{
@@ -132,27 +144,30 @@ class CustomEvent extends React.Component {
                                         marginLeft: '4px',
                                     }}
                                 >
-                                    {Object.entries(eventDetail).map(
-                                        ([key, value]) =>
-                                            key !== 'Title' &&
-                                            key !== 'Status' ? (
-                                                <span
-                                                    key={key}
-                                                    style={{
-                                                        fontWeight: 'bold',
-                                                        margin: '6px 0',
-                                                        color:
-                                                            key === 'PatentID'
-                                                                ? '#338FFF'
-                                                                : '#424242',
-                                                    }}
-                                                >
-                                                    {value}
-                                                </span>
-                                            ) : (
-                                                <></>
-                                            )
-                                    )}
+                                    {event.data &&
+                                        Object.entries(event.data).map(
+                                            ([key, value]) =>
+                                                key !== 'Title' &&
+                                                key !== 'Status' &&
+                                                key !== 'DeadlineType' ? (
+                                                    <span
+                                                        key={key}
+                                                        style={{
+                                                            fontWeight: 'bold',
+                                                            margin: '6px 0',
+                                                            color:
+                                                                key ===
+                                                                'PatentID'
+                                                                    ? '#338FFF'
+                                                                    : '#424242',
+                                                        }}
+                                                    >
+                                                        {value}
+                                                    </span>
+                                                ) : (
+                                                    <></>
+                                                )
+                                        )}
                                 </div>
                             </div>
 
@@ -187,6 +202,10 @@ class CustomEvent extends React.Component {
                                 marginLeft: '4px',
                                 textOverflow: 'ellipsis',
                                 overflow: 'hidden',
+                                textDecoration:
+                                    event.data.Status === 'complete'
+                                        ? 'line-through'
+                                        : 'none',
                             }}
                         >
                             <span
@@ -194,11 +213,12 @@ class CustomEvent extends React.Component {
                                     marginBottom: '2px',
                                     textOverflow: 'ellipsis',
                                     overflow: 'hidden',
+                                    fontWeight: 'bold',
                                 }}
                             >
-                                {eventDetail.Title}
+                                {event.data.Title}
                             </span>
-                            <span>{eventDetail.PatentID}</span>
+                            <span>{event.data.PatentID}</span>
                         </div>
                     </div>
                 </MyTooltip>
@@ -208,31 +228,89 @@ class CustomEvent extends React.Component {
     }
 }
 
-class CustomShowMoreButton extends React.Component {
-    render() {
-        const { onClick, count } = this.props
-        return (
-            <button
-                onClick={onClick}
-                style={{
-                    backgroundColor: '#007bff',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    padding: '5px 10px',
-                    cursor: 'pointer',
-                    marginTop: '5px',
-                }}
-            >
-                Show {count} more
-            </button>
+// class CustomShowMoreButton extends React.Component {
+//     render() {
+//         const { onClick, count } = this.props
+//         return (
+//             <button
+//                 onClick={onClick}
+//                 style={{
+//                     backgroundColor: '#007bff',
+//                     color: 'white',
+//                     border: 'none',
+//                     borderRadius: '4px',
+//                     padding: '5px 10px',
+//                     cursor: 'pointer',
+//                     marginTop: '5px',
+//                 }}
+//             >
+//                 Show {count} more
+//             </button>
+//         )
+//     }
+// }
+
+const CustomDateCellWrapper = ({ value, children, events }) => {
+    const maxEventsToShow = 2 // Limit the number of events to display
+    const eventsForDate = events?.filter((event) =>
+        moment(event.start).isSame(value, 'day')
+    )
+
+    const handleShowMore = () => {
+        console.log(`Show more for date: ${value}`)
+        // Add your custom logic, e.g., open a modal to show all events for the date
+        alert(
+            `More events on ${moment(value).format('MMMM Do YYYY')}: \n${eventsForDate.map((e) => e.data?.Title).join('\n')}`
         )
     }
+
+    return (
+        <div
+            style={{ position: 'relative', padding: '5px', cursor: 'pointer' }}
+        >
+            {children}
+            {eventsForDate?.slice(0, maxEventsToShow).map((event, index) => (
+                <div
+                    key={index}
+                    style={{
+                        backgroundColor: '#87ebdc',
+                        borderRadius: '4px',
+                        padding: '2px',
+                        marginBottom: '2px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        color: 'green',
+                        fontSize: '12px',
+                    }}
+                >
+                    {event.data?.Title}
+                </div>
+            ))}
+            {eventsForDate.length > maxEventsToShow && (
+                <button
+                    onClick={handleShowMore}
+                    style={{
+                        backgroundColor: '#007bff',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        padding: '2px 4px',
+                        fontSize: '12px',
+                        cursor: 'pointer',
+                        marginTop: '5px',
+                    }}
+                >
+                    Show {eventsForDate.length - maxEventsToShow} more
+                </button>
+            )}
+        </div>
+    )
 }
 
 class MonthView extends React.Component {
     render() {
-        const { events } = this.props
+        const { events, handleCloseNewDeadLineWindow } = this.props
 
         return (
             <Calendar
@@ -243,14 +321,17 @@ class MonthView extends React.Component {
                 defaultView="month"
                 views={['month']}
                 date={new Date(moment().year(), 0, 1)}
-                style={{ height: 300 }}
+                style={{ height: 1000 }}
                 components={{
-                    event: CustomEvent,
+                    event: (eventProps) => (
+                        <CustomEvent event={eventProps.event} />
+                    ),
+                    // dateCellWrapper: (props) => (
+                    //     <CustomDateCellWrapper {...props} events={events} />
+                    // ),
                 }}
                 toolbar={false}
-                onShowMore={(events, date) =>
-                    console.log('Show More triggered', events, date)
-                }
+                onSelectSlot={handleCloseNewDeadLineWindow}
             />
         )
     }

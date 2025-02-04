@@ -1,13 +1,14 @@
 import React from 'react'
 import MyCalendar from './assets/components/MyCalendar/MyCalendar'
 
-// import SysPopup from './assets/components/CommonComponents/BasicComponents/SysPopup/SysPopup'
-import Button from './assets/components/CommonComponents/Layout/Button'
+import SysPopup from './assets/components/CommonComponents/BasicComponents/SysPopup/SysPopup'
+// import Button from './assets/components/CommonComponents/Layout/Button'
 // import Help from './assets/components/PopupComponents/Help/Help'
 // import DataForModel from './assets/components/PopupComponents/DataForModel/DataForModel'
 // import DocumentPreview from './assets/components/DocumentPreview/DocumentPreview'
 // import FileViewer from './assets/components/CommonComponents/FileViewer/FileViewer'
-import { MyTooltip } from './assets/components/CommonComponents/BasicComponents/Tooltip/Tooltip'
+// import { MyTooltip } from './assets/components/CommonComponents/BasicComponents/Tooltip/Tooltip'
+import NewDeadlineWindow from './assets/components/MyCalendar/NewDeadlineWindow/NewDeadlineWindow'
 
 class App extends React.Component {
     constructor(props) {
@@ -73,6 +74,12 @@ class App extends React.Component {
         })
     }
 
+    handleCloseNewDeadLineWindow = () => {
+        this.setState({
+            isOpenPopup: !this.state.isOpenPopup,
+        })
+    }
+
     render() {
         const { isOpenPopup, isOpenPopupDataModel, documents, isViewerOpen } =
             this.state
@@ -131,7 +138,23 @@ class App extends React.Component {
                         onClose={this.handleViewerClose}
                     />
                 )} */}
-                <MyCalendar />
+                <SysPopup
+                    LayoutWidth={'300px'}
+                    Open={isOpenPopup}
+                    Title={'Deadline'}
+                    onClose={this.handleCloseNewDeadLineWindow}
+                >
+                    <NewDeadlineWindow
+                        handleCloseNewDeadLineWindow={
+                            this.handleCloseNewDeadLineWindow
+                        }
+                    />
+                </SysPopup>
+                <MyCalendar
+                    handleCloseNewDeadLineWindow={
+                        this.handleCloseNewDeadLineWindow
+                    }
+                />
             </div>
         )
     }

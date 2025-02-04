@@ -1,33 +1,66 @@
-.rbc-month-view {
-  border: none;
+.year {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
-.rbc-month-view .rbc-header {
-  text-align: center;
-  font-weight: bold;
+
+.month {
+    margin: 5px 5px 15px 5px;
 }
-.rbc-month-view .rbc-header span {
-  display: inline-block;
-  width: 100%;
+
+.month-name {
+    color: #000;
+    font-weight: bold;
+    font-size: 14px;
 }
-.rbc-month-view .rbc-header:first-letter {
-  text-transform: uppercase;
+
+.day {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 6px;
+    text-align: center;
+    line-height: 30px;
 }
-.rbc-month-view .rbc-month-row {
-  justify-content: center;
+
+.date {
+    width: 30px;
+    height: 30px;
+    margin: 6px;
+    background: white;
+    border-radius: 50px;
+    border: none;
+    outline: none;
 }
-.rbc-month-view .rbc-day-bg {
-  border: none !important;
+
+.has-event {
+    background: red;
 }
-.rbc-month-view .rbc-date-cell {
-  padding: 0 !important;
+
+.date.in-month:hover {
+    cursor: pointer;
+    background: red;
+    color: white;
 }
-.rbc-month-view .rbc-date-cell button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+.today {
+    background: #417c97;
+    color: white;
+}
+
+.date.prev-month,
+.date.next-month {
+    color: grey;
+}
+
+.date.has-event {
+    background-color: #ff4500;
+    color: white;
+}
+
+.date .event-title {
+    display: block;
+    font-size: 0.8em;
+    color: #ff4500;
+    margin-top: 4px;
 }
