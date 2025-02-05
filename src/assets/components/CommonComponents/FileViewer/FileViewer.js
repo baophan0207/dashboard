@@ -20,7 +20,7 @@ export default class FileViewer extends Component {
         const { documents, onClose } = this.props
 
         return (
-            <div className="file-viewer-wrapper">
+            <div>
                 <button
                     className="close-button"
                     onClick={onClose}
@@ -35,10 +35,6 @@ export default class FileViewer extends Component {
                         header: {
                             disableHeader: false,
                             disableFileName: false,
-                        },
-                        pdfZoom: {
-                            defaultZoom: 1.1,
-                            zoomJump: 0.2,
                         },
                         pdfVerticalScrollByDefault: true,
                     }}
